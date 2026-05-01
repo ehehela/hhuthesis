@@ -579,7 +579,7 @@ footskip=0.7cm % 页脚1.8cm %
     }
     \vskip 40pt
     \begin{center}
-        \includegraphics[height=25mm]{hhuname.png}\\
+        \includegraphics[height=25mm]{hhuname.pdf}\\
         \vskip 10pt
         \def\ULthickness{2pt}
         {\ifhhut@doctor \songti \zihao{2} \hhut@label@thesistitle@doctor
