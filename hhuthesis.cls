@@ -24,7 +24,7 @@
 %% To produce the documentation run the original source files ending with `.dtx'
 %% through LaTeX.
 \NeedsTeXFormat{LaTeX2e}[2008/05/04]
-\ProvidesClass{hhuthesis}[2026/05/07 v2.0.1 hhuthesis document class]
+\ProvidesClass{hhuthesis}[2026/05/07 v2.1.2 hhuthesis document class]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \newif\ifhhut@bachelor\hhut@bachelorfalse
 \newif\ifhhut@academicmaster\hhut@academicmasterfalse
@@ -48,7 +48,7 @@
 \def\hhut@label@enkeywords{Keywords:~}
 \def\hhut@label@acknowledgement{致谢}
 \def\hhut@label@resume{附录}
-\def\hhut@value@templateversion{v2.0.1}
+\def\hhut@value@templateversion{v2.1.2}
 \newcommand{\version}{\hhut@value@templateversion}
 \def\hhut@label@nlc{国家图书馆封面}
 \def\hhut@label@studentnumber{学号：}
@@ -134,7 +134,6 @@ For the Degree of\\
 \RequirePackage{hologo}
 \RequirePackage{etoolbox}
 \RequirePackage{xparse}
-\RequirePackage{notoccite}
 \RequirePackage{ifthen}
 \RequirePackage{ifpdf}
 \RequirePackage{fancyhdr}
@@ -166,14 +165,13 @@ For the Degree of\\
 \RequirePackage{makecell}
 \RequirePackage{diagbox}
 \RequirePackage{booktabs}
-\RequirePackage[numbers,square,comma,super,sort&compress]{natbib}
+\RequirePackage[style=gb7714-2015,gbnamefmt=lowercase,url=false,doi=false,isbn=false,eprint=false]{biblatex}
 \RequirePackage{xcolor}
 \RequirePackage{listings}
 \RequirePackage{hyperref}
 \RequirePackage{enumitem}
 \RequirePackage{wasysym}
 \RequirePackage{pifont}
-\RequirePackage{hypernat}
 \RequirePackage{tabularx}
 \RequirePackage{makeidx}
 \RequirePackage{glossaries}
@@ -329,7 +327,6 @@ belowskip = {6bp},
 \renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
 \renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
 \renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
-\newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
 \def\hhut@getfileinfo#1 #2 #3\relax#4\relax{%
   \def\hhutfiledate{#1}%
   \def\hhutfileversion{#2}%
@@ -735,33 +732,31 @@ numbersep=-1em
     \@starttoc{toc}%
     \if@restonecol\twocolumn\fi
 }
-\renewenvironment{thebibliography}[1]
-     {\footnotesize
-      \chapter*{\bibname}
-      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
-      \addcontentsline{toc}{chapter}{参考文献}
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-           {\settowidth\labelwidth{\@biblabel{#1}}%
-            \leftmargin\labelwidth
-            \advance\leftmargin\labelsep
-            \setlength{\parsep}{-0.5mm}
-            \setlength{\labelsep}{0.5em}
-            \setlength{\itemsep}{0.05pc}
-            \setlength{\listparindent}{0in}
-            \setlength{\itemindent}{0in}
-            \setlength{\rightmargin}{0in}
-            \@openbib@code
-            \usecounter{enumiv}%
-            \let\p@enumiv\@empty
-            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+\defbibheading{bibliography}[\bibname]{%
+  \chapter*{#1}%
+  \@mkboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}%
+  \addcontentsline{toc}{chapter}{#1}}
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\setlength{\parsep}{-0.5mm}%
+      \setlength{\labelsep}{0.5em}%
+      \setlength{\itemsep}{0.05pc}%
+      \setlength{\listparindent}{0in}%
+      \setlength{\itemindent}{0in}%
+      \setlength{\rightmargin}{0in}%
+      \setlength{\leftmargin}{\labelnumberwidth}%
+      \addtolength{\leftmargin}{\labelsep}%
       \sloppy
       \clubpenalty4000
       \@clubpenalty \clubpenalty
-      \widowpenalty4000%
-      \sfcode`\.\@m}
-     {\def\@noitemerr
-       {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}
+      \widowpenalty4000
+      \sfcode`\.\@m}}
+  {\endlist}
+  {\item}
+\renewcommand{\bibfont}{\footnotesize}
 \newenvironment{acknowledgement}
     {\chapter{\hhut@label@acknowledgement}
     \songti

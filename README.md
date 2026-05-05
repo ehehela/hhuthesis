@@ -6,7 +6,7 @@
 
 # hhuthesis
 
-**Latest Version: `V2.0.2`**  
+**Latest Version: `v2.1.2`**  
 
 Scroll down for the English version of README.
 
@@ -53,6 +53,9 @@ Scroll down for the English version of README.
 - 开发文件
   - `hhuthesis.ins`
   - `hhuthesis.dtx`
+- 构建脚本
+  - `hhuthesis-build.cmd`
+  - `hhuthesis-build.sh`
 - 核心文档
   - `hhuthesis.cls`
 - 配置文件
@@ -61,7 +64,6 @@ Scroll down for the English version of README.
   - `latexmkrc`
 - 附属文件
   - `hhuname.pdf`
-  - `hhuthesis-numeric.bst`
 - 使用示例
   - `hhuthesis-example.tex`
 - 其他文件
@@ -130,6 +132,9 @@ Refer to the relevant section of the [User Manual][manual] for detailed instruci
 - Development files
   - `hhuthesis.ins`
   - `hhuthesis.dtx`
+- Build scripts
+  - `hhuthesis-build.cmd`
+  - `hhuthesis-build.sh`
 - Main template class:
   - `hhuthesis.cls`
 - Configuration files:
@@ -138,7 +143,6 @@ Refer to the relevant section of the [User Manual][manual] for detailed instruci
   - `latexmkrc`
 - Affiliated files:
   - `hhuname.pdf`
-  - `hhuthesis-numeric.bst`
 - Demo
   - `hhuthesis-example.tex`
 - Other files:

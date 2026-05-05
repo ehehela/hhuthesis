@@ -17,7 +17,7 @@
 %
 % \iffalse
 %<*driver>
-\ProvidesFile{hhuthesis.dtx}[2026/05/07 2.0.2 Hohai University Thesis Template]
+\ProvidesFile{hhuthesis.dtx}[2026/05/07 2.1.2 Hohai University Thesis Template]
 \documentclass{ltxdoc}
 \usepackage{dtx-style}
 
@@ -185,8 +185,7 @@
 % \endlastfoot
 % hhuthesis.ins & \textsc{DocStrip}驱动文件（开发用）\\
 % hhuthesis.dtx & \textsc{DocStrip}源文件（开发用）\\\midrule
-% hhuthesis.cls & 模板类文件\\
-% hhuthesis-numeric.bst & 参考文献样式文件（顺序编码式） \\\midrule
+% hhuthesis.cls & 模板类文件\\\midrule
 % hhuthesis-example.tex & 示例文档主文件\\
 % reference/ & 示例文档参考文献目录\\
 % chapters/ & 示例文档章节具体内容\\
@@ -235,12 +234,12 @@
 % \subsubsection{XeLaTeX}
 % 用户也可以选择提供的脚本手动编译。
 %
-% 本模板使用\XeTeX 引擎提供的\XeLaTeX 的命令处理，同时使用\hologo{BibTeX}处理参考文献，构
+% 本模板使用\XeTeX 引擎提供的\XeLaTeX 的命令处理，同时使用 biber（\pkg{biblatex} 的默认后端）处理参考文献，构
 % 建流程为：
 % \begin{shell}
 %    del hhuthesis-example.pdf
 %    xelatex -no-pdf --interaction=nonstopmode hhuthesis-example 
-%    bibtex hhuthesis-example
+%    biber hhuthesis-example
 %    xelatex -no-pdf --interaction=nonstopmode hhuthesis-example
 %    xelatex --interaction=nonstopmode hhuthesis-example
 %    start "" "hhuthesis-example.pdf"
@@ -252,12 +251,12 @@
 % 生成的pdf文档查看模板生成内容。
 %
 % \section{使用说明}
-% 本手册假定用户已经能处理一般的\LaTeX{} 文档，并对 \hologo{BibTeX} 有一定了解。如果
+% 本手册假定用户已经能处理一般的\LaTeX{} 文档，并对 biber/\pkg{biblatex} 有一定了解。如果
 % 从未接触过 \TeX{} 和 \LaTeX，建议先学习相关的基础知识。
 %
 % \subsection{示例文档}
 %
-% 模板核心文件有： \file{hhuthesis.cls}，\file{hhuthesis-numeric.bst}
+% 模板核心文件有： \file{hhuthesis.cls}。
 % 和 \file{hhuname.png}，但如果没有示例文档会较难下手，所以
 % 推荐从模板自带的示例文档入手，其中包括了论文写作用到的所有命令及其适用方法，只需用自己的内容进行
 % 相应替换就可以。对于不清楚的命令可以查阅本手册，下面的例子描述了模板中章节的组织形式，来自于示例
@@ -841,25 +840,29 @@
 %
 % \subsubsection{引用方式}
 % \label{sec:citestyle}
-% 模板支持顺序编码制。用户在设置参考文献表的样式（\cs{bibliographystyle}）时，
-% 正文中引用文献的标注会自动调整为对应的格式。
-% 参考文献引用采用命令\cs{upcite}生成上标引用。
+% 模板支持顺序编码制。参考文献处理基于 \pkg{biblatex} 宏包的
+% \texttt{gb7714-2015} 样式，使用 biber 作为后端。正文中引用文献
+% 使用 \cs{cite} 命令生成上标引用，也可使用 \cs{supercite} 命令。
 %
-% 关于参考文献引用的更多细节参考 \pkg{natbib} 的文档。
+% 关于参考文献引用的更多细节参考 \pkg{biblatex} 的文档和
+% \texttt{biblatex-gb7714-2015} 的文档。
 %
 % \subsection{其他部分}
 %
 % \subsubsection{参考文献}
 % \label{sec:bibliography}
 %
-% 模板支持使用 \hologo{BibTeX} 处理生成参考文献表，
-% 用户需要在文中设置参考文献格式并调用 \file{.bib} 数据库：
+% 模板使用 biber 作为后端处理参考文献，用户需要在导言区使用
+% \cs{addbibresource} 命令载入参考文献数据库，并在正文中需要
+% 生成参考文献表的位置使用 \cs{printbibliography} 命令：
 % \begin{latex}
-%   \bibliographystyle{hhuthesis-numeric}    % 顺序编码制
-%   \bibliography{reference/chap1}           % 载入chap1.bib
+%   \addbibresource{reference/chap1.bib}       % 载入chap1.bib
+%   ...
+%   \printbibliography                         % 生成参考文献表
 % \end{latex}
 %
-%  \note[注意：]{\cs{bibliographystyle} 命令只能出现一次。}
+%  \note[注意：]{\cs{printbibliography} 命令只能出现一次。}
+%  \note[注意：]{\pkg{biblatex} 使用 biber 程序处理参考文献，需要将编译命令从 bibtex 改为 biber。如使用 latexmk 编译，应在 \file{latexmkrc} 配置文件中设置 \texttt{\$bibtex = 'biber';}。}
 %
 % \subsubsection{致谢}
 % \DescribeEnv{acknowledgement}
@@ -913,7 +916,11 @@
 %                                补回 \pkg{indentfirst} 宏包（cls 中有但 dtx 中遗漏）\newline
 %                                补齐 dtx 代码块中缺失的行尾注释符，消除 docstrip 生成 cls 时宏定义中的多余空格\newline
 %                                修复因 dtx/cls 不同步导致的封面页排版异常\\
-% v2.0.2 & 2026/05/07 & 呼啦啦 & 将 logo 替换为高分辨率 PDF 版本，清理废弃图片文件\\\bottomrule
+% v2.0.2 & 2026/05/07 & 呼啦啦 & 将 logo 替换为高分辨率 PDF 版本，清理废弃图片文件\\
+% v2.1.2 & 2026/05/07 & 呼啦啦 & 参考文献后端由 natbib+BibTeX 迁移至 biblatex+biber，\newline
+%                                采用 biblatex-gb7714-2015 样式处理 GB/T 7714 标准格式，\newline
+%                                移除自定义 \cs{upcite} 命令（改用 biblatex 原生 \cs{cite}/\cs{supercite}），\newline
+%                                删除 hhuthesis-numeric.bst 文件\\\bottomrule
 % \end{longtable}
 %
 % \section{实现细节}
@@ -921,7 +928,7 @@
 % \subsection{基本信息}
 %    \begin{macrocode}
 %<cls>\NeedsTeXFormat{LaTeX2e}[2008/05/04]
-%<cls>\ProvidesClass{hhuthesis}[2026/05/07 v2.0.2 hhuthesis document class]
+%<cls>\ProvidesClass{hhuthesis}[2026/05/07 v2.1.2 hhuthesis document class]
 %    \end{macrocode}
 % 
 % \subsection{定义选项}
@@ -974,7 +981,7 @@
 %
 % 定义文档类的版本号字符串常量：
 %    \begin{macrocode}
-\def\hhut@value@templateversion{v2.0.2}
+\def\hhut@value@templateversion{v2.1.2}
 %    \end{macrocode}
 %
 % 定义版本号命令\cs{version}:
@@ -1106,11 +1113,6 @@
 \RequirePackage{xparse}     
 %    \end{macrocode}
 %
-% \pkg{notoccite} 宏包支持目录引用。
-%    \begin{macrocode}
-\RequirePackage{notoccite} 
-%    \end{macrocode}
-%
 % \pkg{ifthen} 宏包提供了 \cs{ifthenelse} 命令，本文档类将使用该命令定义一些其他命令。
 %    \begin{macrocode}
 \RequirePackage{ifthen}
@@ -1231,9 +1233,10 @@
 \RequirePackage{booktabs}
 %    \end{macrocode}
 %
-% 使用\pkg{natbib} 宏包美化参考文献排序和引用格式。
+% 使用\pkg{biblatex} 宏包处理参考文献，采用 GB/T 7714-2015 顺序编码制格式，
+% 使用 biber 作为后端处理程序。
 %    \begin{macrocode}
-\RequirePackage[numbers,square,comma,super,sort&compress]{natbib}
+\RequirePackage[style=gb7714-2015,gbnamefmt=lowercase,url=false,doi=false,isbn=false,eprint=false]{biblatex}
 %    \end{macrocode}
 %
 % 使用\pkg{xcolor} 宏包控制文本色彩。
@@ -1266,10 +1269,6 @@
 \RequirePackage{pifont}
 %    \end{macrocode}
 %
-% 使用\pkg{hypernat} 宏包解决\pkg{natbib}和\pkg{hyperref}的兼容性。
-%    \begin{macrocode}
-\RequirePackage{hypernat}
-%    \end{macrocode}
 %
 % 使用\pkg{tabularx} 宏包增强标准\LaTeX{}制表环境，根据表格的总宽度自动计算特定表格列的宽度。
 %    \begin{macrocode}
@@ -1591,11 +1590,6 @@
 \renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
 %    \end{macrocode}
 %
-% \subsection{引用与超链接}
-% 定义上标引用命令。
-%    \begin{macrocode}
-\newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
-%    \end{macrocode}
 %
 % 获取引用文件
 %    \begin{macrocode}
@@ -2095,35 +2089,33 @@
 %    \end{macrocode}
 %
 % \subsubsection{参考文献}
-% 参考文献使用10号字，段前段后行距为0行。修改\pkg{natbib}的\env{thebibliography}环境，调整距离。
+% 参考文献使用10号字，段前段后行距为0行。使用\pkg{biblatex} 宏包设置参考文献格式。
 %    \begin{macrocode}
-\renewenvironment{thebibliography}[1]
-     {\footnotesize
-      \chapter*{\bibname}
-      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
-      \addcontentsline{toc}{chapter}{参考文献}
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-           {\settowidth\labelwidth{\@biblabel{#1}}%
-            \leftmargin\labelwidth
-            \advance\leftmargin\labelsep
-            \setlength{\parsep}{-0.5mm}
-            \setlength{\labelsep}{0.5em}
-            \setlength{\itemsep}{0.05pc}
-            \setlength{\listparindent}{0in}
-            \setlength{\itemindent}{0in}
-            \setlength{\rightmargin}{0in}
-            \@openbib@code
-            \usecounter{enumiv}%
-            \let\p@enumiv\@empty
-            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+\defbibheading{bibliography}[\bibname]{%
+  \chapter*{#1}%
+  \@mkboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}%
+  \addcontentsline{toc}{chapter}{#1}}
+\defbibenvironment{bibliography}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\setlength{\parsep}{-0.5mm}%
+      \setlength{\labelsep}{0.5em}%
+      \setlength{\itemsep}{0.05pc}%
+      \setlength{\listparindent}{0in}%
+      \setlength{\itemindent}{0in}%
+      \setlength{\rightmargin}{0in}%
+      \setlength{\leftmargin}{\labelnumberwidth}%
+      \addtolength{\leftmargin}{\labelsep}%
       \sloppy
       \clubpenalty4000
       \@clubpenalty \clubpenalty
-      \widowpenalty4000%
-      \sfcode`\.\@m}
-     {\def\@noitemerr
-       {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}
+      \widowpenalty4000
+      \sfcode`\.\@m}}
+  {\endlist}
+  {\item}
+\renewcommand{\bibfont}{\footnotesize}
 %    \end{macrocode}
 %
 % \subsubsection{致谢页}

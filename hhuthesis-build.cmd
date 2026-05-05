@@ -9,12 +9,12 @@ echo.
 echo === ③ Build example PDF ===
 del hhuthesis-example.pdf 2>nul
 xelatex -no-pdf --interaction=nonstopmode hhuthesis-example
-bibtex hhuthesis-example
+biber hhuthesis-example
 xelatex -no-pdf --interaction=nonstopmode hhuthesis-example
 xelatex --interaction=nonstopmode hhuthesis-example
 echo.
 echo === Clean up ===
-del *.aux *.bbl *.blg *.fdb_latexmk *.fls *.hd *.idx *.ilg *.ind *.log *.lof *.lot *.out *.run.xml *.synctex.gz *.toc *.xdv 2>nul
+del *.aux *.bbl *.bcf *.blg *.fdb_latexmk *.fls *.hd *.idx *.ilg *.ind *.log *.lof *.lot *.out *.run.xml *.synctex.gz *.toc *.xdv 2>nul
 echo.
 echo === Done ===
 echo   hhuthesis.cls
