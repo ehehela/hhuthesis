@@ -17,7 +17,7 @@
 %
 % \iffalse
 %<*driver>
-\ProvidesFile{hhuthesis.dtx}[2026/05/07 2.0.1 Hohai University Thesis Template]
+\ProvidesFile{hhuthesis.dtx}[2026/05/07 2.0.2 Hohai University Thesis Template]
 \documentclass{ltxdoc}
 \usepackage{dtx-style}
 
@@ -912,7 +912,8 @@
 % v2.0.1 & 2026/05/07 & 呼啦啦 & 将 dtx 源文件与发布版 cls 对齐，确立 dtx 为第一手资料：\newline
 %                                补回 \pkg{indentfirst} 宏包（cls 中有但 dtx 中遗漏）\newline
 %                                补齐 dtx 代码块中缺失的行尾注释符，消除 docstrip 生成 cls 时宏定义中的多余空格\newline
-%                                修复因 dtx/cls 不同步导致的封面页排版异常\\\bottomrule
+%                                修复因 dtx/cls 不同步导致的封面页排版异常\\
+% v2.0.2 & 2026/05/07 & 呼啦啦 & 将 logo 替换为高分辨率 PDF 版本，清理废弃图片文件\\\bottomrule
 % \end{longtable}
 %
 % \section{实现细节}
@@ -920,7 +921,7 @@
 % \subsection{基本信息}
 %    \begin{macrocode}
 %<cls>\NeedsTeXFormat{LaTeX2e}[2008/05/04]
-%<cls>\ProvidesClass{hhuthesis}[2026/05/07 v2.0.1 hhuthesis document class]
+%<cls>\ProvidesClass{hhuthesis}[2026/05/07 v2.0.2 hhuthesis document class]
 %    \end{macrocode}
 % 
 % \subsection{定义选项}
@@ -973,7 +974,7 @@
 %
 % 定义文档类的版本号字符串常量：
 %    \begin{macrocode}
-\def\hhut@value@templateversion{v2.0.1}
+\def\hhut@value@templateversion{v2.0.2}
 %    \end{macrocode}
 %
 % 定义版本号命令\cs{version}:
