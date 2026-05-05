@@ -6,7 +6,7 @@
 
 # hhuthesis
 
-**Latest Version: `V2.0.0`**  
+**Latest Version: `V2.0.2`**  
 
 Scroll down for the English version of README.
 
@@ -32,8 +32,8 @@ Scroll down for the English version of README.
 
 [下载tar.gz压缩包][tar]，Linux和MacOS用户适用。
 
-[zip]: https://codeload.github.com/caowenhan/hhuthesis/zip/v1.0.0
-[tar]:https://codeload.github.com/caowenhan/hhuthesis/tar.gz/v1.0.0
+~~[zip]: https://codeload.github.com/caowenhan/hhuthesis/zip/v1.0.0~~
+~~[tar]:https://codeload.github.com/caowenhan/hhuthesis/tar.gz/v1.0.0~~
 
 ### 安装使用
 
@@ -60,7 +60,7 @@ Scroll down for the English version of README.
   - `hhuthesis-run.cmd`
   - `latexmkrc`
 - 附属文件
-  - `hhuname.png`
+  - `hhuname.pdf`
   - `hhuthesis-numeric.bst`
 - 使用示例
   - `hhuthesis-example.tex`
@@ -111,8 +111,8 @@ Homepage of this project: [https://github.com/caowenhan/hhuthesis]
 [Download ZIP][zip], for Windows Users.
 [Download Tar][tar], for Linux and MacOS Users.
 
-[zip]: https://codeload.github.com/caowenhan/hhuthesis/zip/v1.0.0
-[tar]:https://codeload.github.com/caowenhan/hhuthesis/tar.gz/v1.0.0
+~~[zip]: https://codeload.github.com/caowenhan/hhuthesis/zip/v1.0.0~~
+~~[tar]:https://codeload.github.com/caowenhan/hhuthesis/tar.gz/v1.0.0~~
 
 ### Installation and Use
 
@@ -137,7 +137,7 @@ Refer to the relevant section of the [User Manual][manual] for detailed instruci
   - `hhuthesis-run.cmd`
   - `latexmkrc`
 - Affiliated files:
-  - `hhuname.png`
+  - `hhuname.pdf`
   - `hhuthesis-numeric.bst`
 - Demo
   - `hhuthesis-example.tex`
