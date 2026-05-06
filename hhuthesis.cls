@@ -305,12 +305,15 @@ fixskip=true,
 font = {fontsize},
 labelsep = zhspace,
 }
-\captionsetup[table][bi-second]{name=Table}
-\captionsetup[figure][bi-second]{name=Figure}
+\captionsetup[table][bi-first]{justification=centering}
+\captionsetup[figure][bi-first]{justification=centering}
+\captionsetup[table][bi-second]{name=Table,justification=centering}
+\captionsetup[figure][bi-second]{name=Fig.,justification=centering}
 \captionsetup[table]{
     labelfont = bf,
     textfont = bf,
     position = top,
+    justification = centering,
 aboveskip = {6bp},
 belowskip = {6bp},
 }
@@ -319,6 +322,7 @@ belowskip = {6bp},
     labelfont = bf,
     textfont = bf,
     position = bottom,
+    justification = centering,
 aboveskip = {6bp},
 belowskip = {6bp},
 }
