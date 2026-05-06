@@ -1,27 +1,30 @@
 %%
-%% This is file 'hhuthesis.cls'
+%% This is file `hhuthesis.cls',
+%% generated with the docstrip utility.
 %%
-%% Copyright(C) 2020-2021, Wenhan Cao.
-%% College of Water Conservancy and Hydropower Engineering, Hohai University.
+%% The original source files were:
 %%
-%% Home Page of the Project:
-%% http://github.com/caowenhan/hhuthesis
-%%
-%% Version:v2.0.0
-%% Last update: April 7th,2021.
-%% It may be distribute and / or modified under the conditions of the LaTeX Project
-%% Public License, either version 1.3c of this license or (at your option) any
-%% later version. The latest version of this license is in
+%% hhuthesis.dtx  (with options: `cls')
+%% This is a generated file.
 %% 
-%% http://www.latex-project.org/lppl.txt
-%%
+%% Copyright (C) 2020, Wenhan Cao.
+%% College of Water Conservancy and Hydropower Engineering, Hohai University.
+%% 
+%% Home Page of the Project: http://github.com/caowenhan/hhuthesis/
+%% 
+%% It may be distributed and/or modified under the conditions of the LaTeX Project
+%% Public License, either version 1.3c of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
 %% and version 1.3c or later is part of all distributions of LaTeX version
 %% 2008/05/04 or later.
-%%
-
+%% 
+%% To produce the documentation run the original source files ending with `.dtx'
+%% through LaTeX.
 \NeedsTeXFormat{LaTeX2e}[2008/05/04]
-\ProvidesClass{hhuthesis}[2021/04/07 v2.0.0 hhuthesis document class]
-
+\ProvidesClass{hhuthesis}[2026/05/07 v2.0.1 hhuthesis document class]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \newif\ifhhut@bachelor\hhut@bachelorfalse
 \newif\ifhhut@academicmaster\hhut@academicmasterfalse
@@ -33,13 +36,8 @@
 \DeclareOption{professionalmaster}{\hhut@professionalmastertrue}
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
-
 \ProcessOptions\relax
 \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}
-
-%%
-%% the setup of ctex package
-%%
 \renewcommand{\contentsname}{目录}
 \renewcommand{\listfigurename}{插图清单}
 \renewcommand{\listtablename}{附表清单}
@@ -50,11 +48,8 @@
 \def\hhut@label@enkeywords{Keywords:~}
 \def\hhut@label@acknowledgement{致谢}
 \def\hhut@label@resume{附录}
-\def\hhut@value@templateversion{v2.0.0}
-%% 当前模板的版本
+\def\hhut@value@templateversion{v2.0.1}
 \newcommand{\version}{\hhut@value@templateversion}
-
-%% 国家图书馆封面标题
 \def\hhut@label@nlc{国家图书馆封面}
 \def\hhut@label@studentnumber{学号：}
 \def\hhut@label@classification{分类号：}
@@ -76,11 +71,7 @@
 \def\hhut@label@chairman{答辩委员会主席：}
 \def\hhut@label@reviewer{答辩委员会成员：}
 \def\hhut@label@comma{、}
-
-%% 论文书脊封面标题
 \def\hhut@label@spine{中缝（书脊）}
-
-%% 论文中文信息封面标题
 \def\hhut@label@cover{中文信息封面}
 \def\hhut@label@cover@classification{分类号(中图法)}
 \def\hhut@label@cover@udc{UDC(DDC)}
@@ -107,20 +98,16 @@
 \def\hhut@label@cover@tutorinstitute{导师单位}
 \def\hhut@label@cover@professional@tutorinstitute{单位}
 \def\hhut@label@cover@defenddate{论文答辩日期}
-
-%% 论文英文信息封面标题
 \def\hhut@label@encover{英文信息封面}
 \def\hhut@label@enstatement{
     Dissertation Submitted to\\
-	{\rmfamily \zihao{4} \textbf{\hhut@value@eninstitute}}\\
-	In Fulfillment of the Requirement\\
-	For the Degree of\\
-	{\rmfamily \zihao{4} \textbf{\hhut@value@englishdegree}}\\
+{\rmfamily \zihao{4} \textbf{\hhut@value@eninstitute}}\\
+In Fulfillment of the Requirement\\
+For the Degree of\\
+{\rmfamily \zihao{4} \textbf{\hhut@value@englishdegree}}\\
 }
 \def\hhut@label@enby{By}
 \def\hhut@label@entutor{Dissertation Supervisor:~}
-
-%% 原创性声明内容
 \def\hhut@label@declareoriginal{原创性声明}
 \def\hhut@label@original{学位论文独创性声明：}
 \def\hhut@label@originalcontent{
@@ -141,87 +128,67 @@
 借阅。论文全部或部分内容的公布(包括刊登)授权河海大学研究生院办
 理。
 }
-
-%% 加载宏包
-
-%% 数学公式&符号
 \RequirePackage{amsmath,amsthm,amsfonts,amssymb,bm,mathrsfs}
-%% 直立希腊字母字体
 \RequirePackage{upgreek}
-%% \XeTeX Logo
-\RequirePackage{xltxtra}    
+\RequirePackage{xltxtra}
 \RequirePackage{hologo}
-\RequirePackage{etoolbox}   % 给宏包打补丁
-\RequirePackage{xparse}     % 用于生成文档级命令的高级接口
-\RequirePackage{notoccite}  % 目录引用
-\RequirePackage{ifthen}     % 选择编译
-\RequirePackage{ifpdf}      % 检查pdfTeX模式
-\RequirePackage{fancyhdr}	% 页眉页脚控制
-\RequirePackage{ulem}       % 下划线控制
-\RequirePackage{indentfirst}% 首行缩进
-%%
-%% 引用geometry宏包设置纸张和页面
-%% 设置版面:上2.5cm，下2.5cm，左2.7cm，右2.7cm，
-%% 页眉2.0cm，页脚1.8cm，装订线0cm
-%%
-\usepackage[%geo
-paper=a4paper,%
-top=2.5cm, % 上2.5cm %
-bottom=2.5cm, % 下2.5cm %
-left=2.7cm,   % 左2.7cm %
-right=2.7cm,  % 右2.7cm %
-headheight=0.5cm, % 页眉 2cm %
-footskip=0.7cm % 页脚1.8cm %
-]{geometry}   % 页面设置 
-\RequirePackage{setspace}   % 设置行间距
-\RequirePackage{titletoc}   % 目录格式
-%% 复杂插图
+\RequirePackage{etoolbox}
+\RequirePackage{xparse}
+\RequirePackage{notoccite}
+\RequirePackage{ifthen}
+\RequirePackage{ifpdf}
+\RequirePackage{fancyhdr}
+\RequirePackage{ulem}
+\RequirePackage{indentfirst}
+\usepackage[%
+    paper=a4paper,%
+    top=2.5cm,%
+    bottom=2.5cm,%
+    left=2.7cm,%
+    right=2.7cm,%
+    headheight=0.5cm,%
+    footskip=0.7cm%
+]{geometry}
+\RequirePackage{setspace}
+\RequirePackage{titletoc}
 \RequirePackage{graphicx}
 \RequirePackage[labelformat=simple]{subcaption}
 \RequirePackage{wrapfig}
 \RequirePackage{caption}
 \RequirePackage{bicaption}
-\RequirePackage{float}   
-%% 复杂表格
-\RequirePackage{threeparttable}  % 表格尾注
-\RequirePackage{longtable}       % 跨页表格
+\RequirePackage{float}
+\RequirePackage{threeparttable}
+\RequirePackage{longtable}
 \RequirePackage{dcolumn}
 \RequirePackage{array}
-\RequirePackage{multirow}        % 跨长的表格单元格
+\RequirePackage{multirow}
 \RequirePackage{multicol}
-\RequirePackage{makecell}        % 许多方便的表格控制
-\RequirePackage{diagbox}         % 斜线表头
-\RequirePackage{booktabs} 
-%% sort and compress citations
+\RequirePackage{makecell}
+\RequirePackage{diagbox}
+\RequirePackage{booktabs}
 \RequirePackage[numbers,square,comma,super,sort&compress]{natbib}
-\RequirePackage{xcolor}     % 颜色宏包
-\RequirePackage{listings}   % 源代码
-%% hyperref package
+\RequirePackage{xcolor}
+\RequirePackage{listings}
 \RequirePackage{hyperref}
-\RequirePackage{enumitem}   % 列表宏包
-\RequirePackage{wasysym}    % 提供特殊符号
-\RequirePackage{pifont}     % 提供带圈数字符号
-\RequirePackage{hypernat}   % 解决natbib和hyperref兼容性
-\RequirePackage{tabularx}   % 支持扩展的列宽
-\RequirePackage{makeidx}    % 支持建立索引
-\RequirePackage{glossaries} % 制作术语表
-\RequirePackage[version=4]{mhchem}  % 提供化学符号
+\RequirePackage{enumitem}
+\RequirePackage{wasysym}
+\RequirePackage{pifont}
+\RequirePackage{hypernat}
+\RequirePackage{tabularx}
+\RequirePackage{makeidx}
+\RequirePackage{glossaries}
+\RequirePackage[version=4]{mhchem}
 \RequirePackage{siunitx}
-
-%% 定义几个常用的数学常量符号
-%% 定义 对数常数e，虚数符号i,j以及微分算子d为直立体
 \newcommand{\me}{\mathrm{e}}
 \newcommand{\mi}{\mathrm{i}}
 \newcommand{\mj}{\mathrm{j}}
 \newcommand{\dif}{\,\mathrm{d}}
-
 \theoremstyle{plain}
 \newtheorem{theorem}{定理~}[chapter]
 \newtheorem{lemma}[theorem]{引理~}
 \newtheorem{corollary}[theorem]{推论~}
 \newtheorem{proposition}[theorem]{命题~}
 \newtheorem{conjecture}{猜想~}[chapter]
-
 \theoremstyle{definition}
 \newtheorem{definition}{定义~}[chapter]
 \newtheorem{problem}{问题~}[chapter]
@@ -230,211 +197,139 @@ footskip=0.7cm % 页脚1.8cm %
 \newtheorem{axiom}{公理~}[chapter]
 \newtheorem{algorithm}{算法~}[chapter]
 \newtheorem{assumption}{假设~}[chapter]
-
 \theoremstyle{remark}
 \newtheorem{remark}{注~}
 \newtheorem{case}{情形~}
 \renewcommand{\proofname}{\bf 证明}
-
-%% 英文字体使用 Times New Roman
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \setmonofont{Courier New}
-
-%% Command -- Clear Double Page
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
-	\thispagestyle{empty}%
-	\hbox{}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
-
-%% 设置行距为20磅
+\thispagestyle{empty}%
+\hbox{}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \setstretch{1.38}
-%% 设置段落间距
-\setlength{\parskip}{0pt}    
-
-%% 设置章节标题标号最多到第4层(\subsubsection)，超过第四层的章节不再自动编号
+\setlength{\parskip}{0pt}
 \setcounter{secnumdepth}{4}
-
-%% 设置章节格式，黑体小二号加粗居中，行距20磅
-%% 间距设定为段前7.5磅，段后7.5磅
-%% 章序号与章名间空一格
 \ctexset{chapter={
-		name = {第,章},
-		number = {\chinese{chapter}},
-		format = {\centering \rmfamily \heiti \zihao{-2}},
-		pagestyle = {hhut@headings},
+name = {第,章},
+number = {\chinese{chapter}},
+format = {\centering \rmfamily \heiti \zihao{-2}},
+pagestyle = {hhut@headings},
         aftername = {\enspace},
         beforeskip= {16pt},
-		afterskip = {16pt},
-		fixskip = true,
-	}
+afterskip = {16pt},
+fixskip = true,
 }
-
-%% 设置一级章节标题格式
-%% 黑体三号，左对齐，行距20磅
-%% 间距设定为段前6磅，段后6磅
-%% 序号与题目间空一格
+}
 \ctexset{section={
-		format={\raggedright \rmfamily \heiti \zihao{3}},
+format={\raggedright \rmfamily \heiti \zihao{3}},
         aftername = {\enspace},
-		beforeskip = {16pt},
-		afterskip = {16pt},
-		fixskip = true,
-	}
+beforeskip = {16pt},
+afterskip = {16pt},
+fixskip = true,
 }
-
-%% 设置二级章节标题样式
-%% 黑体小三号，左对齐，行距20磅
-%% 间距设定为段前6磅，段后3磅
-%% 序号与题名空一格
+}
 \ctexset{subsection={
-		format={\raggedright \rmfamily \heiti \zihao{-3}},
+format={\raggedright \rmfamily \heiti \zihao{-3}},
         aftername = {\enspace},
-		beforeskip = {16pt},
-		afterskip = {12pt},
-		fixskip=true,
-	}
+beforeskip = {16pt},
+afterskip = {12pt},
+fixskip=true,
 }
-
-%% 设置三级章节标题样式
-%% 仿宋四号，左对齐，行距20磅
-%% 间距设定为段前3磅，段后0磅
-%% 序号与题名空一格
+}
 \ctexset{subsubsection={
-		format={\raggedright \rmfamily \fangsong \zihao{4}},
+format={\raggedright \rmfamily \fangsong \zihao{4}},
         aftername = {\enspace},
-		beforeskip = {12pt},
-		afterskip = {12pt},
-		fixskip=true,
-	}
+beforeskip = {12pt},
+afterskip = {12pt},
+fixskip=true,
 }
-
-%% 设置目录深度最多到第1层
+}
 \setcounter{tocdepth}{1}
-
-%% 设定目录格式，目录颜色更换为黑色，并将目录、插图索引、附表索引加入目录中。
 \addtocontents{toc}{\protect\hypersetup{hidelinks}}
 \addtocontents{lot}{\protect\hypersetup{hidelinks}}
 \addtocontents{lof}{\protect\hypersetup{hidelinks}}
-
-%% 设置目录格式
 \titlecontents{chapter}[0pt]{\heiti \zihao{-4}}
     {\thecontentslabel\hspace{0.5\ccwd}}{}
     {\hspace{.5em}\titlerule*{.}\contentspage}
 \titlecontents{section}[\ccwd]{\songti \zihao{-4}}
     {\thecontentslabel\hspace{0.5\ccwd}}{}
     {\hspace{.5em}\titlerule*{.}\contentspage}
-
 \titlecontents{figure}[0pt]{\songti \zihao{-4}}
 {\figurename~\thecontentslabel\quad}{\hspace*{-1.5cm}}
 {\hspace{.5em}\titlerule*{.}\contentspage}
-
 \titlecontents{table}[0pt]{\songti \zihao{-4}}
 {\tablename~\thecontentslabel\quad}{\hspace*{-1.5cm}}
 {\hspace{.5em}\titlerule*{.}\contentspage}
-
-%%
-%% 空 页眉页脚
 \fancypagestyle{hhut@empty}{%
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
-    \renewcommand{\footrulewidth}{0pt}}    % get rid of headers and footers   
-
-%% 按照河海大学学位论文页面要求设置页眉页脚，学位论文始终是双面打印
-%% 奇数页的页眉如下：
-%% 上方居中显示“河海大学XX学位论文”
-%% 偶数页的页眉如下：
-%% 上方居中显示当前章(chapter)的编号和标题
-%% 如当前不位于mainmatter中，则上方只显示当前章的标题
-%% 无论奇偶页，页眉线为单横线
-%% 无论奇偶页，页脚居中显示页码
+    \renewcommand{\footrulewidth}{0pt}}
 \fancypagestyle{hhut@headings}{%
-	\fancyhf{}
-	%% 设置页脚格式
-	\fancyfoot[C]{\songti \zihao{-5} \thepage}
-	%% 设置页眉格式
+\fancyhf{}
+\fancyfoot[C]{\songti \zihao{-5} \thepage}
     \fancyhead[CO]{ \ifhhut@doctor \zihao{-5} {\songti 河海大学博士学位论文}
                         \else \ifhhut@bachelor \zihao{-5} {\songti 河海大学学士学位论文}
                             \else \zihao{-5} {\songti 河海大学硕士学位论文}\fi\fi}
     \fancyhead[CE]{ \songti \zihao{-5} \leftmark}
 }
-
-%% 对于openright选项，必须保证章页右开，且如果前章末页没有内容需只保留其页眉页脚
 \let\hhut@cleardoublepage\cleardoublepage
 \newcommand{\hhut@clearemptydoublepage}{%
-	\clearpage{\pagestyle{hhut@empty}\hhut@cleardoublepage}}
+\clearpage{\pagestyle{hhut@empty}\hhut@cleardoublepage}}
 \let\cleardoublepage\hhut@clearemptydoublepage
-
-%% 修改frontmatter的页码为大写罗马格式，并调整页面风格
 \renewcommand{\frontmatter}{
-	\if@openright\cleardoublepage\else\clearpage\fi
-	\@mainmatterfalse
-	\pagenumbering{Roman}
-	\pagestyle{hhut@headings}
+\if@openright\cleardoublepage\else\clearpage\fi
+\@mainmatterfalse
+\pagenumbering{Roman}
+\pagestyle{hhut@headings}
 }
-%% 修改mainmatter的页码为阿拉伯格式
 \renewcommand{\mainmatter}{
-	\if@openright\cleardoublepage\else\clearpage\fi
-	\@mainmattertrue
-	\pagenumbering{arabic}
-	\pagestyle{hhut@headings}
+\if@openright\cleardoublepage\else\clearpage\fi
+\@mainmattertrue
+\pagenumbering{arabic}
+\pagestyle{hhut@headings}
 }
-
-%% 设置浮动体与正文文字之间的距离
-\setlength{\floatsep}{6pt}      % 浮动体之间的间距
-\setlength{\textfloatsep}{6pt}  % 处于b或t位置的浮动体和文字间距
-\setlength{\intextsep}{6pt}     % 处于文字之中h的浮动体和文字间距
+\setlength{\floatsep}{6pt}
+\setlength{\textfloatsep}{6pt}
+\setlength{\intextsep}{6pt}
 \setlength{\@fptop}{0bp \@plus1.0fil}
 \setlength{\@fpsep}{12bp \@plus2.0fil}
 \setlength{\@fpbot}{0bp \@plus1.0fil}
-
-%% 将浮动参数设为较宽松的值
 \renewcommand{\textfraction}{0.15}
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\bottomfraction}{0.65}
 \renewcommand{\floatpagefraction}{0.60}
-
-%% 设置列表格式
-\newcolumntype{d}[1]{D{.}{.}{#1}}% or D{.}{,}{#1} or D{.}{\cdot}{#1}
-\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}} % 表格内转行
-
-%% 设置图表标题选项，标题字体大小为五号字
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
 \DeclareCaptionLabelSeparator{zhspace}{\hspace{1\ccwd}}
 \DeclareCaptionFont{fontsize}{\zihao{5}}
 \captionsetup{
-	font = {fontsize},
-	labelsep = zhspace,
+font = {fontsize},
+labelsep = zhspace,
 }
 \captionsetup[table][bi-second]{name=Table}
-\captionsetup[figure][bi-second]{name=Fig.}
+\captionsetup[figure][bi-second]{name=Figure}
 \captionsetup[table]{
     labelfont = bf,
     textfont = bf,
     position = top,
-	aboveskip = {6bp},
-	belowskip = {6bp},
+aboveskip = {6bp},
+belowskip = {6bp},
 }
 \numberwithin{table}{section}
 \captionsetup[figure]{
     labelfont = bf,
     textfont = bf,
     position = bottom,
-	aboveskip = {6bp},
-	belowskip = {6bp},
+aboveskip = {6bp},
+belowskip = {6bp},
 }
-
-%% 如果插入的图片没有指定扩展名，那么依次搜索下面的扩展名所对应的文件
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png,.jpeg,.bmp}
-\graphicspath{{figures/}}   % 定义图表默认路径
-
-%% 定义公式、图、表编号的形式“C.S.N”
+\graphicspath{{figures/}}
 \renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
 \renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
 \renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
-
-% 上标引用
 \newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
-
-%% 获取引用文件
 \def\hhut@getfileinfo#1 #2 #3\relax#4\relax{%
   \def\hhutfiledate{#1}%
   \def\hhutfileversion{#2}%
@@ -445,75 +340,61 @@ footskip=0.7cm % 页脚1.8cm %
   \edef\reserved@a{\csname ver@hhuthesis.cls\endcsname}
 \fi
 \expandafter\hhut@getfileinfo\reserved@a\relax? ? \relax\relax
-
-%% 引用超链接
 \hypersetup{
-	bookmarksnumbered,%
-	linktoc=all,
-	colorlinks=true,
-	citecolor=black,
-	filecolor=black,
-	linkcolor=black,
-	linkbordercolor=black,
-	urlcolor=black,
-	plainpages=false,%
-	pdfstartview=FitH
+bookmarksnumbered,%
+linktoc=all,
+colorlinks=true,
+citecolor=black,
+filecolor=black,
+linkcolor=black,
+linkbordercolor=black,
+urlcolor=black,
+plainpages=false,%
+pdfstartview=FitH
 }
-
-%% 设置列表缩进符合中文环境
 \setenumerate{%
     fullwidth,
-    topsep= 0pt,                % 列表顶部与之前内容的额外空白
-    itemindent=\parindent,      % 每个item第一行的缩进
-    listparindent=\parindent,   % 每一个item第一行之后隔行的缩进
-    itemsep=0ex,                % 列表各项之间的额外垂直空白
-    partopsep=0pt,              % 如果列表之前是一个空行，列表顶部的额外空白
-    parsep=0ex                  % item中，如果分段，段落间的额外空白
+    topsep= 0pt,
+    itemindent=\parindent,
+    listparindent=\parindent,
+    itemsep=0ex,
+    partopsep=0pt,
+    parsep=0ex
 }
-
-%% 设置无序列表的标签符号
 \setlist[itemize,1]{label=$\medbullet$}
 \setlist[itemize,2]{label=$\balcksquare$}
 \setlist[itemize,3]{label=$\Diamondblack$}
-
-%% listings 源代码显示
 \lstset{tabsize=4,     %
-	frame=shadowbox,    % 把代码用带有阴影的框圈起来
-	commentstyle=\color{red!50!green!50!blue!50},%浅灰色的注释
-	rulesepcolor=\color{red!20!green!20!blue!20},%代码块边框为淡青色
-	keywordstyle=\color{blue!90}\bfseries, %代码关键字的颜色为蓝色，粗体
-	showstringspaces=false,%不显示代码字符串中间的空格标记
-	stringstyle=\ttfamily, % 代码字符串的特殊格式
-	keepspaces=true, %
-	breakindent=22pt, %
-	numbers=left,%左侧显示行号
-	stepnumber=1,%
-	numberstyle=\tiny, %行号字体用小号
-	basicstyle=\footnotesize, %
-	showspaces=false, %
-	flexiblecolumns=true, %
-	breaklines=true, %对过长的代码自动换行
-	breakautoindent=true,%
-	breakindent=4em, %
-	aboveskip=1em, %代码块边框
-	fontadjust,
-	captionpos=t,
-	framextopmargin=2pt,framexbottommargin=2pt,abovecaptionskip=-3pt,belowcaptionskip=3pt,
-	xleftmargin=4em,xrightmargin=4em, % 设定listing左右的空白
-	texcl=true,
-	% 设定中文冲突，断行，列模式，数学环境输入，listing数字的样式
-	extendedchars=false,columns=flexible,mathescape=true
-	numbersep=-1em
+frame=shadowbox,
+commentstyle=\color{red!50!green!50!blue!50},
+rulesepcolor=\color{red!20!green!20!blue!20},
+keywordstyle=\color{blue!90}\bfseries,
+showstringspaces=false,
+stringstyle=\ttfamily,
+keepspaces=true, %
+breakindent=22pt, %
+numbers=left,
+stepnumber=1,%
+numberstyle=\tiny,
+basicstyle=\footnotesize, %
+showspaces=false, %
+flexiblecolumns=true, %
+breaklines=true,
+breakautoindent=true,%
+breakindent=4em, %
+aboveskip=1em,
+fontadjust,
+captionpos=t,
+framextopmargin=2pt,framexbottommargin=2pt,abovecaptionskip=-3pt,belowcaptionskip=3pt,
+xleftmargin=4em,xrightmargin=4em,
+texcl=true,
+extendedchars=false,columns=flexible,mathescape=true
+numbersep=-1em
 }
-\renewcommand{\lstlistingname}{代码} % 重命名Listings标题头
-
-%% 定义封面下划线
+\renewcommand{\lstlistingname}{代码}
 \def\hhut@underline[#1]#2{%
-	\underline{\hbox to #1{\hfill#2\hfill}}}
+\underline{\hbox to #1{\hfill#2\hfill}}}
 \def\hhutunderline{\@ifnextchar[\hhut@underline\underline}
-
-
-%% 国家图书馆封面&论文中文信息封面的可用命令
 \newcommand\studentnumber[1]{\def\hhut@value@studentnumber{#1}}
 \newcommand\classification[1]{\def\hhut@value@classification{#1}}
 \newcommand\securitylevel[1]{\def\hhut@value@securitylevel{#1}}
@@ -557,13 +438,11 @@ footskip=0.7cm % 页脚1.8cm %
 \newcommand\tutorainstitute[1]{\def\hhut@value@tutorainstitute{#1}}
 \newcommand\tutorb[1]{\def\hhut@value@tutorb{#1}}
 \newcommand\tutorbinstitute[1]{\def\hhut@value@tutorbinstitute{#1}}
-
-%% “绘制”hhut国家图书馆封面
 \newcommand\makenlctitle[1]{%
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@nlc}{nlc}
-    {\songti \zihao{4}   
+    {\songti \zihao{4}
         \vskip 10pt
         \makebox[40pt][r]{\hhut@label@classification}
         \hhutunderline[150pt]{\hhut@value@classification}
@@ -649,8 +528,6 @@ footskip=0.7cm % 页脚1.8cm %
         \cleardoublepage
     \fi
 }
-
-%% “绘制”书脊页
 \newcommand\makeverticaltitle{
    \cleardoublepage
    \thispagestyle{empty}
@@ -673,8 +550,6 @@ footskip=0.7cm % 页脚1.8cm %
         \cleardoublepage
     \fi
 }
-
-%% "绘制"论文中文信息封面
 \newcommand\makeinfo[1]%
 {
     \newpage
@@ -735,7 +610,7 @@ footskip=0.7cm % 页脚1.8cm %
         \hhutunderline[90pt]{\hhut@value@tutorb}%
         \hfill
         \hhut@label@cover@professional@tutorinstitute%
-        \hhutunderline[210pt]{\hhut@value@tutorbinstitute}\\            
+        \hhutunderline[210pt]{\hhut@value@tutorbinstitute}\\
     \else
         \noindent\hhut@label@cover@tutor%
         \hhutunderline[90pt]{\hhut@value@tutor}%
@@ -753,8 +628,6 @@ footskip=0.7cm % 页脚1.8cm %
         \cleardoublepage
     \fi
 }
-
-%% 论文英文信息页可用命令
 \newcommand\englishtitle[1]{\def\hhut@value@englishtitle{#1}}
 \newcommand\englishauthor[1]{\def\hhut@value@englishauthor{#1}}
 \newcommand\entutor[1]{\def\hhut@value@entutor{#1}}
@@ -763,8 +636,6 @@ footskip=0.7cm % 页脚1.8cm %
 \newcommand\englishdate[1]{\def\hhut@value@englishdate{#1}}
 \newcommand\enlocate[1]{\def\hhut@value@enlocate{#1}}
 \newcommand\englishdegree[1]{\def\hhut@value@englishdegree{#1}}
-
-%% “绘制”论文英文信息页
 \newcommand\makeeninfo[1]{%
     \cleardoublepage
     \thispagestyle{empty}
@@ -784,7 +655,7 @@ footskip=0.7cm % 页脚1.8cm %
         \rmfamily \zihao{4} \textbf{\hhut@value@entutor}}
         \vskip 60pt
         {\rmfamily \zihao{4} \textbf{\hhut@value@enlocate}}\\
-        {\noindent \rmfamily \zihao{4} \textbf{\hhut@value@englishdate}}        
+        {\noindent \rmfamily \zihao{4} \textbf{\hhut@value@englishdate}}
         \end{spacing}
     \end{center}
     \normalfont
@@ -794,8 +665,6 @@ footskip=0.7cm % 页脚1.8cm %
         \cleardoublepage
     \fi
 }
-
-%% “绘制”原创性声明
 \newcommand\makedeclare{%
     \cleardoublepage
     \pdfbookmark[0]{\hhut@label@declareoriginal}{declareoriginal}
@@ -828,62 +697,44 @@ footskip=0.7cm % 页脚1.8cm %
         \cleardoublepage
     \fi
 }
-
-%% 下一页从偶数页开始
 \newcommand\beginatevenpage{
     \clearpage
     \if@twoside
-        \thispagestyle{hhut@empty}
+        \thispagestyle{empty}
         \cleardoublepage
     \fi
 }
-
-%%
-%% 创建各章节部分环境
-%%
-
-%% 前言
 \newenvironment{preface}
 {
     \cleardoublepage
     \chapter{\hhut@label@preface}
 }{}
-
-%% 中文摘要
 \newenvironment{abstract}
 {
     \cleardoublepage
     \chapter{\hhut@label@abstract}
 }{}
-%% 中文关键词
 \newcommand\keywords[1]{%
     \vspace{2ex}\noindent{\textbf{\hhut@label@keywords}} #1}
-
-%% 英文摘要
 \newenvironment{enabstract}
 {
     \clearpage
     \chapter{\hhut@label@enabstract}
 }{}
-%% 英文关键词
 \newcommand\enkeywords[1]{%
     \vspace{2ex}\noindent{\textbf{\hhut@label@enkeywords}} #1}
-
-%% 目录
 \renewcommand\tableofcontents{%
     \if@twocolumn
     \@restonecoltrue\onecolumn
     \else
     \@restonecolfalse
     \fi
-    \chapter*{\contentsname}%目录里显示“目录”，否则\chapter*
+    \chapter*{\contentsname}
     \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
     \pdfbookmark[0]{目录}{bittoc}
     \@starttoc{toc}%
     \if@restonecol\twocolumn\fi
 }
-
-%% 参考文献
 \renewenvironment{thebibliography}[1]
      {\footnotesize
       \chapter*{\bibname}
@@ -910,45 +761,35 @@ footskip=0.7cm % 页脚1.8cm %
       \sfcode`\.\@m}
      {\def\@noitemerr
        {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}     
-
-%% 致谢
+      \endlist}
 \newenvironment{acknowledgement}
     {\chapter{\hhut@label@acknowledgement}
     \songti
     }{}
-
-%% 主要术语&符号    
 \newcommand{\hhut@denotation@name}{主要符号对照表}
 \newenvironment{denotation}[1][2.5cm]{
-    \chapter{\hhut@denotation@name} % no tocline
+    \chapter{\hhut@denotation@name}
     \noindent\begin{list}{}%
     {\vskip-30bp\zihao{-4}
      \renewcommand\makelabel[1]{##1\hfil}
-     \setlength{\labelwidth}{#1} % 标签盒子宽度
-     \setlength{\labelsep}{0.5cm} % 标签与列表文本距离
-     \setlength{\itemindent}{0cm} % 标签缩进量
-     \setlength{\leftmargin}{\labelwidth+\labelsep} % 左边界
+     \setlength{\labelwidth}{#1}
+     \setlength{\labelsep}{0.5cm}
+     \setlength{\itemindent}{0cm}
+     \setlength{\leftmargin}{\labelwidth+\labelsep}
      \setlength{\rightmargin}{0cm}
-     \setlength{\parsep}{0cm} % 段落间距
-     \setlength{\itemsep}{0cm} % 标签间距
-    \setlength{\listparindent}{0cm} % 段落缩进量
-    \setlength{\topsep}{0pt} % 标签与上文的间距
-    }}{\end{list}}    
-
-%% 简历与科研成果页
+     \setlength{\parsep}{0cm}
+     \setlength{\itemsep}{0cm}
+    \setlength{\listparindent}{0cm}
+    \setlength{\topsep}{0pt}
+    }}{\end{list}}
 \newenvironment{resume}{%
     \cleardoublepage
     \chapter{\hhut@label@resume}
-    \songti    
+    \songti
 }{}
-
-%% 学术论文、科研项目、所获荣誉用researchitem{<类别>}开启
 \newcommand{\researchitem}[1]{%
     \vspace{12bp}{\zihao{4} \heiti \leftline{#1}}\par\vspace{6bp}
 }
-
-%% 攻读博士学位期间发表的主要成果用publications罗列
 \newlist{publications}{enumerate}{1}
 \setlist[publications]{
     label=[\arabic*],
@@ -959,8 +800,6 @@ footskip=0.7cm % 页脚1.8cm %
     labelsep=!,
     resume
 }
-
-%% 攻读博士学位期间参与的科研项目用projects罗列
 \newlist{projects}{enumerate}{1}
 \setlist[projects]{
     label=[\arabic*],
@@ -970,8 +809,6 @@ footskip=0.7cm % 页脚1.8cm %
     leftmargin=8mm,
     labelsep=!,
 }
-
-%% 攻读博士学位期间所获的荣誉与奖励用honours罗列
 \newlist{honours}{enumerate}{1}
 \setlist[honours]{
     label=[\arabic*],
@@ -981,13 +818,8 @@ footskip=0.7cm % 页脚1.8cm %
     leftmargin=8mm,
     labelsep=!,
 }
-
-%% 中文破折号
 \newcommand{\cndash}{\rule{0.0em}{0pt}\rule[0.35em]{1.4em}{0.05em}\rule{0.2em}{0pt}}
-
-%% hhutspace
 \newcommand{\hhutspace}[1][1]{\hspace{#1\ccwd}}
-
 \endinput
 %%
-%% End of file `hhuthesis.cls'
+%% End of file `hhuthesis.cls'.

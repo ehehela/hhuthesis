@@ -17,7 +17,7 @@
 %
 % \iffalse
 %<*driver>
-\ProvidesFile{hhuthesis.dtx}[2021/04/07 2.0.0 Hohai University Thesis Template]
+\ProvidesFile{hhuthesis.dtx}[2026/05/07 2.0.1 Hohai University Thesis Template]
 \documentclass{ltxdoc}
 \usepackage{dtx-style}
 
@@ -908,7 +908,11 @@
 %                                修改了论文页眉，单页页眉改为“河海大学XX学位论文”，双页页眉改为“所在章节的一级标题名”，页眉下划线改为单线\newline
 %                                按照编写格式要求修改了论文章节标题的字体、字号、对齐方式、段前段后距离，\newline
 %                                修改了论文附录格式，去除了个人简历\newline
-%                                修复了参考文献格式，添加了文献标识符\\\bottomrule
+%                                修复了参考文献格式，添加了文献标识符\\
+% v2.0.1 & 2026/05/07 & 呼啦啦 & 将 dtx 源文件与发布版 cls 对齐，确立 dtx 为第一手资料：\newline
+%                                补回 \pkg{indentfirst} 宏包（cls 中有但 dtx 中遗漏）\newline
+%                                补齐 dtx 代码块中缺失的行尾注释符，消除 docstrip 生成 cls 时宏定义中的多余空格\newline
+%                                修复因 dtx/cls 不同步导致的封面页排版异常\\\bottomrule
 % \end{longtable}
 %
 % \section{实现细节}
@@ -916,7 +920,7 @@
 % \subsection{基本信息}
 %    \begin{macrocode}
 %<cls>\NeedsTeXFormat{LaTeX2e}[2008/05/04]
-%<cls>\ProvidesClass{hhuthesis}[2021/04/07 v2.0.0 hhuthesis document class]
+%<cls>\ProvidesClass{hhuthesis}[2026/05/07 v2.0.1 hhuthesis document class]
 %    \end{macrocode}
 % 
 % \subsection{定义选项}
@@ -969,7 +973,7 @@
 %
 % 定义文档类的版本号字符串常量：
 %    \begin{macrocode}
-\def\hhut@value@templateversion{v2.0.0}
+\def\hhut@value@templateversion{v2.0.1}
 %    \end{macrocode}
 %
 % 定义版本号命令\cs{version}:
@@ -1126,17 +1130,22 @@
 \RequirePackage{ulem}
 %    \end{macrocode}
 %
+% 使用\pkg{indentfirst} 宏包使各章第一节首行缩进。
+%    \begin{macrocode}
+\RequirePackage{indentfirst}
+%    \end{macrocode}
+%
 % 使用\pkg{geometry} 宏包定义页面布局，定义段间距。页面大小为A4，上下边距为2.5cm，
 % 左右边距为2.7cm，页眉为2.0cm，页脚为1.8cm。
 %    \begin{macrocode}
 \usepackage[%
-    paper=a4paper,
-    top=2.5cm,
-    bottom=2.5cm,
-    left=2.7cm,
-    right=2.7cm, 
-    headheight=0.5cm, 
-    footskip=0.7cm 
+    paper=a4paper,%
+    top=2.5cm,%
+    bottom=2.5cm,%
+    left=2.7cm,%
+    right=2.7cm,%
+    headheight=0.5cm,%
+    footskip=0.7cm%
 ]{geometry} 
 %    \end{macrocode}
 %
@@ -1336,7 +1345,7 @@
 % 对于\emph{openright} 选项，必须保证章首页右开，且如果前章末页无内容须清空其页眉页脚。
 %    \begin{macrocode}
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
-	\thispagestyle{empty}
+	\thispagestyle{empty}%
 	\hbox{}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 %    \end{macrocode}
 %
@@ -1465,11 +1474,11 @@
 % 页眉奇偶页不同，奇数页页眉居中显示“河海大学XX学位论文”，XX可以是博士、硕士和学士，
 % 偶数页页眉是当前章的编号和标题，当不位于\cs{mainmatter}中，则上方只显示当前章的标题。
 %    \begin{macrocode}
-\fancypagestyle{hhut@empty}{
+\fancypagestyle{hhut@empty}{%
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
     \renewcommand{\footrulewidth}{0pt}} 
-\fancypagestyle{hhut@headings}{
+\fancypagestyle{hhut@headings}{%
 	\fancyhf{}
 	\fancyfoot[C]{\songti \zihao{-5} \thepage}
     \fancyhead[CO]{ \ifhhut@doctor \zihao{-5} {\songti 河海大学博士学位论文}
@@ -1482,7 +1491,7 @@
 % 定义前章末页没有内容的命令\cs{hhut@clearemptydoublepage}。
 %    \begin{macrocode}
 \let\hhut@cleardoublepage\cleardoublepage
-\newcommand{\hhut@clearemptydoublepage}{
+\newcommand{\hhut@clearemptydoublepage}{%
 	\clearpage{\pagestyle{hhut@empty}\hhut@cleardoublepage}}
 \let\cleardoublepage\hhut@clearemptydoublepage
 %    \end{macrocode}
@@ -1589,10 +1598,10 @@
 %
 % 获取引用文件
 %    \begin{macrocode}
-\def\hhut@getfileinfo#1 #2 #3\relax#4\relax{
-  \def\hhutfiledate{#1}
-  \def\hhutfileversion{#2}
-  \def\hhutfileinfo{#3}}
+\def\hhut@getfileinfo#1 #2 #3\relax#4\relax{%
+  \def\hhutfiledate{#1}%
+  \def\hhutfileversion{#2}%
+  \def\hhutfileinfo{#3}}%
 \expandafter\ifx\csname ver@hhuthesis.cls\endcsname\relax
   \edef\reserved@a{\csname ver@ctextemp_hhuthesis.cls\endcsname}
 \else
@@ -1604,7 +1613,7 @@
 % 修改引用超链接格式。
 %    \begin{macrocode}
 \hypersetup{
-	bookmarksnumbered,
+	bookmarksnumbered,%
 	linktoc=all,
 	colorlinks=true,
 	citecolor=black,
@@ -1612,7 +1621,7 @@
 	linkcolor=black,
 	linkbordercolor=black,
 	urlcolor=black,
-	plainpages=false,
+	plainpages=false,%
 	pdfstartview=FitH
 }
 %    \end{macrocode}
@@ -1620,7 +1629,7 @@
 % \subsection{列表环境}
 % 修改列表缩进格式符合中文环境。
 %    \begin{macrocode}
-\setenumerate{
+\setenumerate{%
     fullwidth,
     topsep= 0pt,                
     itemindent=\parindent,      
@@ -1640,24 +1649,24 @@
 %
 % 采用\pkg{listings}宏包修改源代码显示格式。
 %    \begin{macrocode}
-\lstset{tabsize=4,     
+\lstset{tabsize=4,     %
 	frame=shadowbox,    
 	commentstyle=\color{red!50!green!50!blue!50},
 	rulesepcolor=\color{red!20!green!20!blue!20},
 	keywordstyle=\color{blue!90}\bfseries, 
 	showstringspaces=false,
 	stringstyle=\ttfamily, 
-	keepspaces=true, 
-	breakindent=22pt, 
+	keepspaces=true, %
+	breakindent=22pt, %
 	numbers=left,
-	stepnumber=1,
+	stepnumber=1,%
 	numberstyle=\tiny, 
-	basicstyle=\footnotesize, 
-	showspaces=false, 
-	flexiblecolumns=true, 
+	basicstyle=\footnotesize, %
+	showspaces=false, %
+	flexiblecolumns=true, %
 	breaklines=true, 
-	breakautoindent=true,
-	breakindent=4em, 
+	breakautoindent=true,%
+	breakindent=4em, %
 	aboveskip=1em, 
 	fontadjust,
 	captionpos=t,
@@ -1677,7 +1686,7 @@
 % \subsection{封面设置}
 % 定义封面下划线。
 %    \begin{macrocode}
-\def\hhut@underline[#1]#2{
+\def\hhut@underline[#1]#2{%
 	\underline{\hbox to #1{\hfill#2\hfill}}}
 \def\hhutunderline{\@ifnextchar[\hhut@underline\underline}
 %    \end{macrocode}
@@ -2048,7 +2057,7 @@
 %
 % \cs{keywords}命令用于生成中文关键词。
 %    \begin{macrocode}
-\newcommand\keywords[1]{
+\newcommand\keywords[1]{%
     \vspace{2ex}\noindent{\textbf{\hhut@label@keywords}} #1}
 %    \end{macrocode}
 %
@@ -2063,23 +2072,23 @@
 %
 % \cs{enkeywords}命令用于生成英文关键词。
 %    \begin{macrocode}
-\newcommand\enkeywords[1]{
+\newcommand\enkeywords[1]{%
     \vspace{2ex}\noindent{\textbf{\hhut@label@enkeywords}} #1}
 %    \end{macrocode}
 %
 % \subsubsection{目录}
 % 修改\cs{tableofcontents}目录生成命令。
 %    \begin{macrocode}
-\renewcommand\tableofcontents{
+\renewcommand\tableofcontents{%
     \if@twocolumn
     \@restonecoltrue\onecolumn
     \else
     \@restonecolfalse
     \fi
     \chapter*{\contentsname}
-    \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}
+    \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
     \pdfbookmark[0]{目录}{bittoc}
-    \@starttoc{toc}
+    \@starttoc{toc}%
     \if@restonecol\twocolumn\fi
 }
 %    \end{macrocode}
@@ -2090,10 +2099,10 @@
 \renewenvironment{thebibliography}[1]
      {\footnotesize
       \chapter*{\bibname}
-      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
       \addcontentsline{toc}{chapter}{参考文献}
-      \list{\@biblabel{\@arabic\c@enumiv}}
-           {\settowidth\labelwidth{\@biblabel{#1}}
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
             \advance\leftmargin\labelsep
             \setlength{\parsep}{-0.5mm}
@@ -2103,16 +2112,16 @@
             \setlength{\itemindent}{0in}
             \setlength{\rightmargin}{0in}
             \@openbib@code
-            \usecounter{enumiv}
+            \usecounter{enumiv}%
             \let\p@enumiv\@empty
-            \renewcommand\theenumiv{\@arabic\c@enumiv}}
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
       \sloppy
       \clubpenalty4000
       \@clubpenalty \clubpenalty
-      \widowpenalty4000
+      \widowpenalty4000%
       \sfcode`\.\@m}
      {\def\@noitemerr
-       {\@latex@warning{Empty `thebibliography' environment}}
+       {\@latex@warning{Empty `thebibliography' environment}}%
       \endlist}
 %    \end{macrocode}
 %
@@ -2135,7 +2144,7 @@
 %    \begin{macrocode}
 \newenvironment{denotation}[1][2.5cm]{
     \chapter{\hhut@denotation@name} 
-    \noindent\begin{list}{}
+    \noindent\begin{list}{}%
     {\vskip-30bp\zihao{-4}
      \renewcommand\makelabel[1]{##1\hfil}
      \setlength{\labelwidth}{#1} 
@@ -2153,7 +2162,7 @@
 % \subsubsection{简历附录}
 % 个人简历用于罗列发表文章、参研项目、所获荣誉等。
 %    \begin{macrocode}
-\newenvironment{resume}{
+\newenvironment{resume}{%
     \cleardoublepage
     \chapter{\hhut@label@resume}
     \songti    
