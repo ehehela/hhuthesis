@@ -1254,9 +1254,10 @@
 \RequirePackage{hyperref}
 %    \end{macrocode}
 %
-% 使用\pkg{enumitem} 宏包自定义列表环境。
+% 使用\pkg{enumitem} 宏包自定义列表环境。添加 inline 选项以支持行内列表
+%（如 \cs{enumerate*} 等带星号的紧凑形式）。
 %    \begin{macrocode}
-\RequirePackage{enumitem}
+\RequirePackage[inline]{enumitem}
 %    \end{macrocode}
 %
 % 使用\pkg{wasysym} 宏包输入特殊符号。
@@ -2245,7 +2246,7 @@
 \RequirePackage{listings}
 \RequirePackage{fancyhdr}
 \RequirePackage{xcolor}
-\RequirePackage{enumitem}
+\RequirePackage[inline]{enumitem}
 \RequirePackage{etoolbox}
 \RequirePackage{metalogo}
 \RequirePackage{bookmark}

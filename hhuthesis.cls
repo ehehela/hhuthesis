@@ -169,7 +169,7 @@ For the Degree of\\
 \RequirePackage{xcolor}
 \RequirePackage{listings}
 \RequirePackage{hyperref}
-\RequirePackage{enumitem}
+\RequirePackage[inline]{enumitem}
 \RequirePackage{wasysym}
 \RequirePackage{pifont}
 \RequirePackage{tabularx}
