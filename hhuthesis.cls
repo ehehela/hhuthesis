@@ -128,7 +128,7 @@ For the Degree of\\
 借阅。论文全部或部分内容的公布(包括刊登)授权河海大学研究生院办
 理。
 }
-\RequirePackage{amsmath,amsthm,amsfonts,amssymb,bm,mathrsfs}
+\RequirePackage{amsmath,amsthm,amsfonts,amssymb,mathrsfs}
 \RequirePackage{upgreek}
 \RequirePackage{xltxtra}
 \RequirePackage{hologo}

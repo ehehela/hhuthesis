@@ -1091,9 +1091,12 @@
 % 引用的宏包和相应的定义。
 %
 % \pkg{amsmath}宏包提供数学公式支持，\pkg{amsthm} 宏包支持自定义数学定理环境。
-% \pkg{amsfonts} 宏包、 \pkg{amssymb}宏包、 \pkg{bm}宏包和\pkg{mathrsfs}宏包提供数学符号和字体支持。
+% \pkg{amsfonts} 宏包、 \pkg{amssymb}宏包和\pkg{mathrsfs}宏包提供数学符号和字体支持。
+% 需要注意的是，本模板\textbf{不再默认加载 \pkg{bm} 宏包}。根据 \pkg{newtxmath} 等字库宏包的建议，
+% \pkg{bm} 应在所有数学字体设置完成后再行加载。建议用户在论文主文件的导言区末尾手动添加 
+% \cs{usepackage\{bm\}}。
 %    \begin{macrocode}
-\RequirePackage{amsmath,amsthm,amsfonts,amssymb,bm,mathrsfs}
+\RequirePackage{amsmath,amsthm,amsfonts,amssymb,mathrsfs}
 %    \end{macrocode}
 %
 % 使用\pkg{upgreek} 宏包生成直立体字母。
