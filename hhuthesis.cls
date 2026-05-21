@@ -24,7 +24,7 @@
 %% To produce the documentation run the original source files ending with `.dtx'
 %% through LaTeX.
 \NeedsTeXFormat{LaTeX2e}[2008/05/04]
-\ProvidesClass{hhuthesis}[2026/05/07 v3.0.0 hhuthesis document class]
+\ProvidesClass{hhuthesis}[2026/05/22 v3.1.0 hhuthesis document class]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \newif\ifhhut@bachelor\hhut@bachelorfalse
 \newif\ifhhut@academicmaster\hhut@academicmasterfalse
@@ -48,7 +48,7 @@
 \def\hhut@label@enkeywords{Keywords:~}
 \def\hhut@label@acknowledgement{致谢}
 \def\hhut@label@resume{附录}
-\def\hhut@value@templateversion{v3.0.0}
+\def\hhut@value@templateversion{v3.1.0}
 \newcommand{\version}{\hhut@value@templateversion}
 \def\hhut@label@nlc{国家图书馆封面}
 \def\hhut@label@studentnumber{学号：}

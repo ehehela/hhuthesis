@@ -6,7 +6,7 @@
 
 # hhuthesis
 
-**Latest Version: `v3.0.0`**  
+**Latest Version: `v3.1.0`**  
 
 Scroll down for the English version of README.
 

@@ -17,7 +17,7 @@
 %
 % \iffalse
 %<*driver>
-\ProvidesFile{hhuthesis.dtx}[2026/05/07 3.0.0 Hohai University Thesis Template]
+\ProvidesFile{hhuthesis.dtx}[2026/05/22 3.1.0 Hohai University Thesis Template]
 \documentclass{ltxdoc}
 \usepackage{dtx-style}
 
@@ -920,7 +920,10 @@
 % v3.0.0 & 2026/05/07 & 呼啦啦 & 参考文献后端由 natbib+BibTeX 迁移至 biblatex+biber，\newline
 %                                采用 biblatex-gb7714-2015 样式处理 GB/T 7714 标准格式，\newline
 %                                移除自定义 \cs{upcite} 命令（改用 biblatex 原生 \cs{cite}/\cs{supercite}），\newline
-%                                删除 hhuthesis-numeric.bst 文件\\\bottomrule
+%                                删除 hhuthesis-numeric.bst 文件\\
+% v3.1.0 & 2026/05/22 & 呼啦啦 & 不再默认加载 \pkg{bm} 宏包，建议用户在导言区末尾手动添加 \cs{usepackage\{bm\}}\newline
+%                                多行双语题注居中显示；英文题注标签缩写为 ``Fig.''\newline
+%                                为 \pkg{enumitem} 宏包添加 inline 选项以支持行内列表\\\bottomrule
 % \end{longtable}
 %
 % \section{实现细节}
@@ -928,7 +931,7 @@
 % \subsection{基本信息}
 %    \begin{macrocode}
 %<cls>\NeedsTeXFormat{LaTeX2e}[2008/05/04]
-%<cls>\ProvidesClass{hhuthesis}[2026/05/07 v3.0.0 hhuthesis document class]
+%<cls>\ProvidesClass{hhuthesis}[2026/05/22 v3.1.0 hhuthesis document class]
 %    \end{macrocode}
 % 
 % \subsection{定义选项}
@@ -981,7 +984,7 @@
 %
 % 定义文档类的版本号字符串常量：
 %    \begin{macrocode}
-\def\hhut@value@templateversion{v3.0.0}
+\def\hhut@value@templateversion{v3.1.0}
 %    \end{macrocode}
 %
 % 定义版本号命令\cs{version}:
