@@ -24,7 +24,16 @@
 %% To produce the documentation run the original source files ending with `.dtx'
 %% through LaTeX.
 \NeedsTeXFormat{LaTeX2e}[2008/05/04]
-\ProvidesClass{hhuthesis}[2026/05/22 v3.2.1 hhuthesis document class]
+\ProvidesClass{hhuthesis}[2026/05/22 v3.2.2 hhuthesis document class]
+\def\hhut@newtxopts{}
+\newif\ifhhut@tonefont\hhut@tonefontfalse
+\DeclareKeys{
+  tonefont .code:n = {\hhut@tonefonttrue},
+  tonefont .default:n = {true},
+  newtxopts .code:n = {\gdef\hhut@newtxopts{#1}},
+  newtxopts .default:n = {},
+}
+\ProcessKeyOptions[hhuthesis]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \newif\ifhhut@bachelor\hhut@bachelorfalse
 \newif\ifhhut@academicmaster\hhut@academicmasterfalse
@@ -36,10 +45,54 @@
 \DeclareOption{professionalmaster}{\hhut@professionalmastertrue}
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
-\newif\ifhhut@tonefont\hhut@tonefontfalse
-\DeclareOption{tonefont}{\hhut@tonefonttrue}
 \ProcessOptions\relax
+\def\hhut@cleanopt#1=#2=#3\@nil{%
+  \def\hhut@optname{#1}%
+  \def\hhut@testa{tonefont}%
+  \def\hhut@testb{newtxopts}%
+  \ifx\hhut@optname\hhut@testa\else
+    \ifx\hhut@optname\hhut@testb\else
+      \ifx\hhut@classlist\@empty
+        \edef\hhut@classlist{\hhut@curopt}%
+      \else
+        \edef\hhut@classlist{\hhut@classlist,\hhut@curopt}%
+      \fi
+    \fi
+  \fi
+}
+\def\hhut@classlist{}
+\@for\hhut@opt:=\@classoptionslist\do{%
+  \edef\hhut@curopt{\hhut@opt}%
+  \ifx\hhut@curopt\@empty\else
+    \expandafter\hhut@cleanopt\hhut@curopt==\@nil
+  \fi
+}%
+\let\@classoptionslist\hhut@classlist
+\let\@raw@classoptionslist\hhut@classlist
 \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}
+\def\hhut@cleanunused#1,#2\@nil{%
+  \def\hhut@cur{#1}%
+  \ifx\hhut@cur\@empty\else
+    \def\hhut@testa{tonefont}%
+    \def\hhut@testb{newtxopts}%
+    \ifx\hhut@cur\hhut@testa\else
+      \ifx\hhut@cur\hhut@testb\else
+        \ifx\hhut@cleanlist\@empty
+          \edef\hhut@cleanlist{\hhut@cur}%
+        \else
+          \edef\hhut@cleanlist{\hhut@cleanlist,\hhut@cur}%
+        \fi
+      \fi
+    \fi
+  \fi
+  \def\hhut@rest{#2}%
+  \ifx\hhut@rest\@empty\else
+    \expandafter\hhut@cleanunused\hhut@rest\@nil
+  \fi
+}
+\def\hhut@cleanlist{}
+\expandafter\hhut@cleanunused\@unusedoptionlist,\@nil
+\let\@unusedoptionlist\hhut@cleanlist
 \renewcommand{\contentsname}{目录}
 \renewcommand{\listfigurename}{插图清单}
 \renewcommand{\listtablename}{附表清单}
@@ -203,7 +256,7 @@ For the Degree of\\
 \renewcommand{\proofname}{\bf 证明}
 \ifhhut@tonefont
   \usepackage[T1]{fontenc}
-  \usepackage{newtx}
+  \expandafter\usepackage\expandafter[\hhut@newtxopts]{newtx}%
   \defaultfontfeatures{}% 清除 fontspec 默认选项，防止 \pkg{newtx} 注册 TeXGyreTermesX
                        % 时带入的 \verb|Extension=.otf| 泄漏到后续 CJK 字体加载
 \else

@@ -286,6 +286,17 @@
 %   \documentclass[tonefont]{hhuthesis}
 % \end{latex}
 %
+% \DescribeOption{newtxopts}
+% 透传选项至 \pkg{newtx}，仅在 \option{tonefont} 启用时生效；
+% 未启用 \option{tonefont} 时该选项被静默忽略。
+% 选项值为逗号分隔的 \pkg{newtx} 子包选项列表，
+% 例如 \option{osf}（旧式数字）、\option{smallerops}（缩小运算符）等。
+% 有关可用选项，请参阅 \pkg{newtx}、\pkg{newtxtext} 和 \pkg{newtxmath} 的文档。
+% \begin{latex}
+%   % T1 编码 + 透传 newtx 选项
+%   \documentclass[tonefont,newtxopts={osf,smallerops}]{hhuthesis}
+% \end{latex}
+%
 % \subsection{封面信息}
 % 封面信息可以通过\file{hhuthesis-example.tex}文件导言区的各设置命令统一设置完成。
 % 本节描述论文用于国家图书馆封面、中文信息封面和英文信息封面所需的内容替换命令。
@@ -937,7 +948,13 @@
 % v3.2.0 & 2026/05/22 & 呼啦啦 & 新增 \texttt{tonefont} 文类选项，切换至 T1 编码字体模式，\newline
 %                                通过 \pkg{newtx} 统一加载三族 Times 风格 Type1 字体，中文字体不变\\
 % v3.2.1 & 2026/05/22 & 呼啦啦 & 为 \pkg{ulem} 宏包添加 \texttt{normalem} 选项以恢复 \cs{emph} 的正常斜体行为，\newline
-%                                避免与 \pkg{algorithm2e} 的 \texttt{function} 环境标题冲突\\\bottomrule
+%                                避免与 \pkg{algorithm2e} 的 \texttt{function} 环境标题冲突\\
+% v3.2.2 & 2026/05/22 & 呼啦啦 & 新增 \texttt{newtxopts} 键值型文类选项，\newline
+%                                透传选项至 \pkg{newtx}（需配合 \texttt{tonefont} 使用），\newline
+%                                未启用 \texttt{tonefont} 时静默忽略；\newline
+%                                改用内核 l3keys 处理 \texttt{tonefont} 和 \texttt{newtxopts} 选项，\newline
+%                                移除 \pkg{kvoptions} 依赖；\newline
+%                                修复键值选项导致的 "Unused global option" 警告\\\bottomrule
 % \end{longtable}
 %
 % \section{实现细节}
@@ -945,13 +962,24 @@
 % \subsection{基本信息}
 %    \begin{macrocode}
 %<cls>\NeedsTeXFormat{LaTeX2e}[2008/05/04]
-%<cls>\ProvidesClass{hhuthesis}[2026/05/22 v3.2.1 hhuthesis document class]
+%<cls>\ProvidesClass{hhuthesis}[2026/05/22 v3.2.2 hhuthesis document class]
 %    \end{macrocode}
 % 
 % \subsection{定义选项}
 % 把没有定义的选项传递给底层的文档类，在这里为ctexbook。
+% 使用内核 l3keys 处理键值型选项（\option{tonefont} 和 \option{newtxopts}），
+% 并在 \cs{ProcessOptions} 之前先行处理，以避免键值选项被误传给底层类。
 %    \begin{macrocode}
 %<*cls>
+\def\hhut@newtxopts{}
+\newif\ifhhut@tonefont\hhut@tonefontfalse
+\DeclareKeys{
+  tonefont .code:n = {\hhut@tonefonttrue},
+  tonefont .default:n = {true},
+  newtxopts .code:n = {\gdef\hhut@newtxopts{#1}},
+  newtxopts .default:n = {},
+}
+\ProcessKeyOptions[hhuthesis]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 %    \end{macrocode}
 % 定义论文学位类型以及打印方式
@@ -966,13 +994,41 @@
 \DeclareOption{professionalmaster}{\hhut@professionalmastertrue}
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
-\newif\ifhhut@tonefont\hhut@tonefontfalse
-\DeclareOption{tonefont}{\hhut@tonefonttrue}
 %    \end{macrocode}
 %
 % 处理选项：
 %    \begin{macrocode}
 \ProcessOptions\relax
+%    \end{macrocode}
+%
+% 清理键值选项残留：\cs{ProcessKeyOptions} 不会从 \cs{@classoptionslist} 中移除
+% 已处理的键值选项，导致 \cs{LoadClass} 时底层类将它们视为未知选项。
+% 需在 \cs{LoadClass} 前清理 \cs{@classoptionslist} 和 \cs{@raw@classoptionslist}，
+% 在 \cs{LoadClass} 后清理 \cs{@unusedoptionlist}（因 ctex 可能将它们重新加入）。
+%    \begin{macrocode}
+\def\hhut@cleanopt#1=#2=#3\@nil{%
+  \def\hhut@optname{#1}%
+  \def\hhut@testa{tonefont}%
+  \def\hhut@testb{newtxopts}%
+  \ifx\hhut@optname\hhut@testa\else
+    \ifx\hhut@optname\hhut@testb\else
+      \ifx\hhut@classlist\@empty
+        \edef\hhut@classlist{\hhut@curopt}%
+      \else
+        \edef\hhut@classlist{\hhut@classlist,\hhut@curopt}%
+      \fi
+    \fi
+  \fi
+}
+\def\hhut@classlist{}
+\@for\hhut@opt:=\@classoptionslist\do{%
+  \edef\hhut@curopt{\hhut@opt}%
+  \ifx\hhut@curopt\@empty\else
+    \expandafter\hhut@cleanopt\hhut@curopt==\@nil
+  \fi
+}%
+\let\@classoptionslist\hhut@classlist
+\let\@raw@classoptionslist\hhut@classlist
 %    \end{macrocode}
 %
 % \subsection{底层文档类}
@@ -981,6 +1037,32 @@
 %
 %    \begin{macrocode}
 \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}
+%    \end{macrocode}
+% 清理 \cs{@unusedoptionlist} 中被 ctex 重新加入的键值选项名：
+%    \begin{macrocode}
+\def\hhut@cleanunused#1,#2\@nil{%
+  \def\hhut@cur{#1}%
+  \ifx\hhut@cur\@empty\else
+    \def\hhut@testa{tonefont}%
+    \def\hhut@testb{newtxopts}%
+    \ifx\hhut@cur\hhut@testa\else
+      \ifx\hhut@cur\hhut@testb\else
+        \ifx\hhut@cleanlist\@empty
+          \edef\hhut@cleanlist{\hhut@cur}%
+        \else
+          \edef\hhut@cleanlist{\hhut@cleanlist,\hhut@cur}%
+        \fi
+      \fi
+    \fi
+  \fi
+  \def\hhut@rest{#2}%
+  \ifx\hhut@rest\@empty\else
+    \expandafter\hhut@cleanunused\hhut@rest\@nil
+  \fi
+}
+\def\hhut@cleanlist{}
+\expandafter\hhut@cleanunused\@unusedoptionlist,\@nil
+\let\@unusedoptionlist\hhut@cleanlist
 %    \end{macrocode}
 %
 % \subsection{字符串常量定义}
@@ -1361,10 +1443,11 @@
 % 模板默认使用 TU 编码（通过 \pkg{fontspec} 加载 Times New Roman / Arial / Courier New
 % 系统字体），也可通过 \texttt{tonefont} 选项切换到 T1 编码（通过 \pkg{newtx}
 % 加载三族 Times 风格传统 Type1 字体），两种模式下三族字体分别近似对等，中文字体不受影响。
+% 若同时指定了 \texttt{newtxopts} 选项，其值将作为 \pkg{newtx} 的选项透传。
 %    \begin{macrocode}
 \ifhhut@tonefont
   \usepackage[T1]{fontenc}
-  \usepackage{newtx}
+  \expandafter\usepackage\expandafter[\hhut@newtxopts]{newtx}%
   \defaultfontfeatures{}% 清除 fontspec 默认选项，防止 \pkg{newtx} 注册 TeXGyreTermesX
                        % 时带入的 \verb|Extension=.otf| 泄漏到后续 CJK 字体加载
 \else
