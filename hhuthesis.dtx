@@ -17,7 +17,7 @@
 %
 % \iffalse
 %<*driver>
-\ProvidesFile{hhuthesis.dtx}[2026/05/22 3.1.0 Hohai University Thesis Template]
+\ProvidesFile{hhuthesis.dtx}[2026/05/22 3.2.0 Hohai University Thesis Template]
 \documentclass{ltxdoc}
 \usepackage{dtx-style}
 
@@ -274,6 +274,16 @@
 % \begin{latex}
 %   % 博士论文
 %   \documentclass[doctor]{hhuthesis}
+% \end{latex}
+%
+% \subsubsection{字体编码}
+% \DescribeOption{tonefont}
+% 字体编码模式，可选：\option{tonefont}。模板默认使用 TU 编码（通过 \pkg{fontspec} 加载系统字体），
+% 启用 \option{tonefont} 后切换至 T1 编码（通过 \pkg{newtx} 统一加载三族 Times
+% 风格的传统 Type1 字体），两种模式下三族字体分别近似对等，中文字体不受影响。
+% \begin{latex}
+%   % T1 编码模式
+%   \documentclass[tonefont]{hhuthesis}
 % \end{latex}
 %
 % \subsection{封面信息}
@@ -923,7 +933,9 @@
 %                                删除 hhuthesis-numeric.bst 文件\\
 % v3.1.0 & 2026/05/22 & 呼啦啦 & 不再默认加载 \pkg{bm} 宏包，建议用户在导言区末尾手动添加 \cs{usepackage\{bm\}}\newline
 %                                多行双语题注居中显示；英文题注标签缩写为 ``Fig.''\newline
-%                                为 \pkg{enumitem} 宏包添加 inline 选项以支持行内列表\\\bottomrule
+%                                为 \pkg{enumitem} 宏包添加 inline 选项以支持行内列表\\
+% v3.2.0 & 2026/05/22 & 呼啦啦 & 新增 \texttt{tonefont} 文类选项，切换至 T1 编码字体模式，\newline
+%                                通过 \pkg{newtx} 统一加载三族 Times 风格 Type1 字体，中文字体不变\\\bottomrule
 % \end{longtable}
 %
 % \section{实现细节}
@@ -931,7 +943,7 @@
 % \subsection{基本信息}
 %    \begin{macrocode}
 %<cls>\NeedsTeXFormat{LaTeX2e}[2008/05/04]
-%<cls>\ProvidesClass{hhuthesis}[2026/05/22 v3.1.0 hhuthesis document class]
+%<cls>\ProvidesClass{hhuthesis}[2026/05/22 v3.2.0 hhuthesis document class]
 %    \end{macrocode}
 % 
 % \subsection{定义选项}
@@ -952,6 +964,8 @@
 \DeclareOption{professionalmaster}{\hhut@professionalmastertrue}
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
+\newif\ifhhut@tonefont\hhut@tonefontfalse
+\DeclareOption{tonefont}{\hhut@tonefonttrue}
 %    \end{macrocode}
 %
 % 处理选项：
@@ -984,7 +998,7 @@
 %
 % 定义文档类的版本号字符串常量：
 %    \begin{macrocode}
-\def\hhut@value@templateversion{v3.1.0}
+\def\hhut@value@templateversion{v3.2.0}
 %    \end{macrocode}
 %
 % 定义版本号命令\cs{version}:
@@ -1342,10 +1356,20 @@
 %
 % \subsection{字体设置}
 % 定义文档使用的英文字体，按照要求，英文字体一般使用Times New Roman 字体。
+% 模板默认使用 TU 编码（通过 \pkg{fontspec} 加载 Times New Roman / Arial / Courier New
+% 系统字体），也可通过 \texttt{tonefont} 选项切换到 T1 编码（通过 \pkg{newtx}
+% 加载三族 Times 风格传统 Type1 字体），两种模式下三族字体分别近似对等，中文字体不受影响。
 %    \begin{macrocode}
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Courier New}
+\ifhhut@tonefont
+  \usepackage[T1]{fontenc}
+  \usepackage{newtx}
+  \defaultfontfeatures{}% 清除 fontspec 默认选项，防止 \pkg{newtx} 注册 TeXGyreTermesX
+                       % 时带入的 \verb|Extension=.otf| 泄漏到后续 CJK 字体加载
+\else
+  \setmainfont{Times New Roman}
+  \setsansfont{Arial}
+  \setmonofont{Courier New}
+\fi
 %    \end{macrocode}
 %
 % \subsection{页面设置}

@@ -24,7 +24,7 @@
 %% To produce the documentation run the original source files ending with `.dtx'
 %% through LaTeX.
 \NeedsTeXFormat{LaTeX2e}[2008/05/04]
-\ProvidesClass{hhuthesis}[2026/05/22 v3.1.0 hhuthesis document class]
+\ProvidesClass{hhuthesis}[2026/05/22 v3.2.0 hhuthesis document class]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \newif\ifhhut@bachelor\hhut@bachelorfalse
 \newif\ifhhut@academicmaster\hhut@academicmasterfalse
@@ -36,6 +36,8 @@
 \DeclareOption{professionalmaster}{\hhut@professionalmastertrue}
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
+\newif\ifhhut@tonefont\hhut@tonefontfalse
+\DeclareOption{tonefont}{\hhut@tonefonttrue}
 \ProcessOptions\relax
 \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}
 \renewcommand{\contentsname}{目录}
@@ -48,7 +50,7 @@
 \def\hhut@label@enkeywords{Keywords:~}
 \def\hhut@label@acknowledgement{致谢}
 \def\hhut@label@resume{附录}
-\def\hhut@value@templateversion{v3.1.0}
+\def\hhut@value@templateversion{v3.2.0}
 \newcommand{\version}{\hhut@value@templateversion}
 \def\hhut@label@nlc{国家图书馆封面}
 \def\hhut@label@studentnumber{学号：}
@@ -199,9 +201,16 @@ For the Degree of\\
 \newtheorem{remark}{注~}
 \newtheorem{case}{情形~}
 \renewcommand{\proofname}{\bf 证明}
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Courier New}
+\ifhhut@tonefont
+  \usepackage[T1]{fontenc}
+  \usepackage{newtx}
+  \defaultfontfeatures{}% 清除 fontspec 默认选项，防止 \pkg{newtx} 注册 TeXGyreTermesX
+                       % 时带入的 \verb|Extension=.otf| 泄漏到后续 CJK 字体加载
+\else
+  \setmainfont{Times New Roman}
+  \setsansfont{Arial}
+  \setmonofont{Courier New}
+\fi
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
 \thispagestyle{empty}%
 \hbox{}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
