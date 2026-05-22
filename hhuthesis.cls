@@ -24,7 +24,7 @@
 %% To produce the documentation run the original source files ending with `.dtx'
 %% through LaTeX.
 \NeedsTeXFormat{LaTeX2e}[2008/05/04]
-\ProvidesClass{hhuthesis}[2026/05/22 v3.2.0 hhuthesis document class]
+\ProvidesClass{hhuthesis}[2026/05/22 v3.2.1 hhuthesis document class]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \newif\ifhhut@bachelor\hhut@bachelorfalse
 \newif\ifhhut@academicmaster\hhut@academicmasterfalse
@@ -50,7 +50,7 @@
 \def\hhut@label@enkeywords{Keywords:~}
 \def\hhut@label@acknowledgement{致谢}
 \def\hhut@label@resume{附录}
-\def\hhut@value@templateversion{v3.2.0}
+\def\hhut@value@templateversion{v3.2.1}
 \newcommand{\version}{\hhut@value@templateversion}
 \def\hhut@label@nlc{国家图书馆封面}
 \def\hhut@label@studentnumber{学号：}
@@ -139,7 +139,7 @@ For the Degree of\\
 \RequirePackage{ifthen}
 \RequirePackage{ifpdf}
 \RequirePackage{fancyhdr}
-\RequirePackage{ulem}
+\RequirePackage[normalem]{ulem}
 \RequirePackage{indentfirst}
 \usepackage[%
     paper=a4paper,%

@@ -17,7 +17,7 @@
 %
 % \iffalse
 %<*driver>
-\ProvidesFile{hhuthesis.dtx}[2026/05/22 3.2.0 Hohai University Thesis Template]
+\ProvidesFile{hhuthesis.dtx}[2026/05/22 3.2.1 Hohai University Thesis Template]
 \documentclass{ltxdoc}
 \usepackage{dtx-style}
 
@@ -935,7 +935,9 @@
 %                                多行双语题注居中显示；英文题注标签缩写为 ``Fig.''\newline
 %                                为 \pkg{enumitem} 宏包添加 inline 选项以支持行内列表\\
 % v3.2.0 & 2026/05/22 & 呼啦啦 & 新增 \texttt{tonefont} 文类选项，切换至 T1 编码字体模式，\newline
-%                                通过 \pkg{newtx} 统一加载三族 Times 风格 Type1 字体，中文字体不变\\\bottomrule
+%                                通过 \pkg{newtx} 统一加载三族 Times 风格 Type1 字体，中文字体不变\\
+% v3.2.1 & 2026/05/22 & 呼啦啦 & 为 \pkg{ulem} 宏包添加 \texttt{normalem} 选项以恢复 \cs{emph} 的正常斜体行为，\newline
+%                                避免与 \pkg{algorithm2e} 的 \texttt{function} 环境标题冲突\\\bottomrule
 % \end{longtable}
 %
 % \section{实现细节}
@@ -943,7 +945,7 @@
 % \subsection{基本信息}
 %    \begin{macrocode}
 %<cls>\NeedsTeXFormat{LaTeX2e}[2008/05/04]
-%<cls>\ProvidesClass{hhuthesis}[2026/05/22 v3.2.0 hhuthesis document class]
+%<cls>\ProvidesClass{hhuthesis}[2026/05/22 v3.2.1 hhuthesis document class]
 %    \end{macrocode}
 % 
 % \subsection{定义选项}
@@ -998,7 +1000,7 @@
 %
 % 定义文档类的版本号字符串常量：
 %    \begin{macrocode}
-\def\hhut@value@templateversion{v3.2.0}
+\def\hhut@value@templateversion{v3.2.1}
 %    \end{macrocode}
 %
 % 定义版本号命令\cs{version}:
@@ -1150,7 +1152,7 @@
 %
 % 使用\pkg{ulem} 宏包控制下划线。
 %    \begin{macrocode}
-\RequirePackage{ulem}
+\RequirePackage[normalem]{ulem}
 %    \end{macrocode}
 %
 % 使用\pkg{indentfirst} 宏包使各章第一节首行缩进。
