@@ -200,6 +200,7 @@ For the Degree of\\
     bottom=2.5cm,%
     left=2.7cm,%
     right=2.7cm,%
+    marginparwidth=2.4cm,%
     headheight=0.5cm,%
     footskip=0.7cm%
 ]{geometry}
