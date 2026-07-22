@@ -1,4 +1,4 @@
-% \iffalse meta-comment
+﻿% \iffalse meta-comment
 %
 % Copyright (C) 2020-2021 by Wenhan Cao.
 % College of Water Conservancy and Hydropower Engineering, Hohai University.
@@ -1684,6 +1684,17 @@
 	belowskip = {6bp},
 }
 \numberwithin{table}{section}
+% Ensure code listings follow section-based numbering too
+% Defer numbering adjustment until packages are loaded (listings defines the
+% `lstlisting` counter). This prevents "No counter 'lstlisting' defined" errors
+% when the command runs too early during class loading.
+\AtBeginDocument{%
+  \makeatletter
+  \@ifundefined{c@lstlisting}{}{%
+    \numberwithin{lstlisting}{section}%
+  }%
+  \makeatother
+}
 \captionsetup[figure]{
     labelfont = bf,
     textfont = bf,
@@ -1704,11 +1715,19 @@
 \graphicspath{{figures/}}
 %    \end{macrocode}
 %
-% 定义公式、图、表编号的形式“C.S.N”
+% 定义公式、图、表编号的形式“C.S.N”，进入附录后章号自动切换为字母前缀，
+% 公式、图、表、代码编号随之更新。
 %    \begin{macrocode}
 \renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
 \renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
 \renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
+\apptocmd{\appendix}{%
+  \renewcommand\thechapter{\Alph{chapter}}%
+  \renewcommand\theequation{\thechapter.\arabic{section}.\arabic{equation}}%
+  \renewcommand\thefigure{\thechapter.\arabic{section}.\arabic{figure}}%
+  \renewcommand\thetable{\thechapter.\arabic{section}.\arabic{table}}%
+  \renewcommand\thelstlisting{\thechapter.\arabic{section}.\arabic{lstlisting}}%
+}{}{}
 %    \end{macrocode}
 %
 %

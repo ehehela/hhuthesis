@@ -381,6 +381,13 @@ aboveskip = {6bp},
 belowskip = {6bp},
 }
 \numberwithin{table}{section}
+\AtBeginDocument{%
+  \makeatletter
+  \@ifundefined{c@lstlisting}{}{%
+    \numberwithin{lstlisting}{section}%
+  }%
+  \makeatother
+}
 \captionsetup[figure]{
     labelfont = bf,
     textfont = bf,
@@ -394,6 +401,13 @@ belowskip = {6bp},
 \renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
 \renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
 \renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
+\apptocmd{\appendix}{%
+  \renewcommand\thechapter{\Alph{chapter}}%
+  \renewcommand\theequation{\thechapter.\arabic{section}.\arabic{equation}}%
+  \renewcommand\thefigure{\thechapter.\arabic{section}.\arabic{figure}}%
+  \renewcommand\thetable{\thechapter.\arabic{section}.\arabic{table}}%
+  \renewcommand\thelstlisting{\thechapter.\arabic{section}.\arabic{lstlisting}}%
+}{}{}
 \def\hhut@getfileinfo#1 #2 #3\relax#4\relax{%
   \def\hhutfiledate{#1}%
   \def\hhutfileversion{#2}%
