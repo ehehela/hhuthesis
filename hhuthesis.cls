@@ -473,6 +473,9 @@ numbersep=-1em
 \def\hhut@underline[#1]#2{%
 \underline{\hbox to #1{\hfill#2\hfill}}}
 \def\hhutunderline{\@ifnextchar[\hhut@underline\underline}
+\def\hhut@tutorinfob@underline[#1]#2#3{%
+\underline{\hbox to #1{%
+\makebox[0pt][l]{#2}\hfill\makebox[0pt][r]{#3}}}}
 \newcommand\studentnumber[1]{\def\hhut@value@studentnumber{#1}}
 \newcommand\classification[1]{\def\hhut@value@classification{#1}}
 \newcommand\securitylevel[1]{\def\hhut@value@securitylevel{#1}}
@@ -482,7 +485,21 @@ numbersep=-1em
     \def\hhut@value@titlemark{\MakeUppercase{#1}}}
 \renewcommand\author[1]{\def\hhut@value@author{#1}}
 \newcommand\tutorinfoa[1]{\def\hhut@value@tutorinfoa{#1}}
-\newcommand\tutorinfob[1]{\def\hhut@value@tutorinfob{#1}}
+\newif\ifhhut@tutorinfob@split
+\NewDocumentCommand{\tutorinfob}{m g}{%
+    \def\hhut@value@tutorinfob{#1}%
+    \IfNoValueTF{#2}{%
+        \hhut@tutorinfob@splitfalse
+    }{%
+        \def\hhut@value@tutorinfoaddress{#2}%
+        \hhut@tutorinfob@splittrue
+    }}
+\def\hhut@tutorinfob@value{%
+    \ifhhut@tutorinfob@split
+        \hhut@tutorinfob@underline[355pt]{\hhut@value@tutorinfob}{\hhut@value@tutorinfoaddress}%
+    \else
+        \hhutunderline[355pt]{\hhut@value@tutorinfob}%
+    \fi}
 \newcommand\degree[1]{\def\hhut@value@degree{#1}}
 \newcommand\major[1]{\def\hhut@value@major{#1}}
 \newcommand\submitdate[1]{\def\hhut@value@submitdate{#1}}
@@ -560,9 +577,9 @@ numbersep=-1em
             \else \ifhhut@nonfulltimemaster \hhut@label@professional@tutora
                 \else \hhut@label@tutor \fi\fi}%
         \hhutunderline[355pt]{\hhut@value@tutorinfoa}\\
-        {\ifhhut@professionalmaster \hhut@label@professional@tutorb \hhutunderline[355pt]{\hhut@value@tutorinfob}
-            \else \ifhhut@nonfulltimemaster \hhut@label@professional@tutorb \hhutunderline[355pt]{\hhut@value@tutorinfob}
-                \else \rightline{\hhutunderline[355pt]{\hhut@value@tutorinfob}}\fi\fi}\\
+        {\ifhhut@professionalmaster \hhut@label@professional@tutorb \hhut@tutorinfob@value
+            \else \ifhhut@nonfulltimemaster \hhut@label@professional@tutorb \hhut@tutorinfob@value
+                \else \rightline{\hhut@tutorinfob@value}\fi\fi}\\
         \noindent\hhut@label@degree%
         \hhutunderline[120pt]{\hhut@value@degree}%
         \hfill

@@ -441,12 +441,16 @@
 % 命令\cs{tutorinfoa}和\cs{tutorinfob}用于设置国家图书馆封面的
 % 论文指导教师信息。其中，对于学术型研究生 \cs{tutorinfoa}命令用于设置
 % 指导教师的姓名和职称，\cs{tutorinfob}命令用于设置指导教师的单位。
+% \cs{tutorinfob}兼容单参数的整体写法；当需要在同一条下划线内分别设置
+% 左侧单位和右侧地址时，可使用第二个分组参数。
 % 对于专业型研究生 \cs{tutorinfoa}命令用于设置学校指导教师
 % 姓名、职称和单位，\cs{tutorinfob}命令用于设置基地指导教师姓名、职称和单位。
 % \begin{latex}
 %    %学术型研究生
 %    \tutorinfoa{<导师姓名&职务&职称>}
 %    \tutorinfob{<导师单位>}
+%    %学术型研究生，单位左对齐、地址右对齐
+%    \tutorinfob{<导师单位>}{<单位地址>}
 %    %专业型研究生
 %    \tutorinfoa{<学校导师姓名&职称&单位>}
 %    \tutorinfob{<基地导师姓名&职称&单位>}    
@@ -1822,8 +1826,12 @@
 % 定义封面下划线。
 %    \begin{macrocode}
 \def\hhut@underline[#1]#2{%
-	\underline{\hbox to #1{\hfill#2\hfill}}}
+\underline{\hbox to #1{\hfill#2\hfill}}}
 \def\hhutunderline{\@ifnextchar[\hhut@underline\underline}
+% 为导师单位和地址提供同一条下划线内的左右对齐排版。
+\def\hhut@tutorinfob@underline[#1]#2#3{%
+\underline{\hbox to #1{%
+\makebox[0pt][l]{#2}\hfill\makebox[0pt][r]{#3}}}}
 %    \end{macrocode}
 %
 % 定义国家图书馆封面和论文中文信息封面的可用命令。
@@ -1837,7 +1845,21 @@
     \def\hhut@value@titlemark{\MakeUppercase{#1}}}
 \renewcommand\author[1]{\def\hhut@value@author{#1}}
 \newcommand\tutorinfoa[1]{\def\hhut@value@tutorinfoa{#1}}
-\newcommand\tutorinfob[1]{\def\hhut@value@tutorinfob{#1}}
+\newif\ifhhut@tutorinfob@split
+\NewDocumentCommand{\tutorinfob}{m g}{%
+    \def\hhut@value@tutorinfob{#1}%
+    \IfNoValueTF{#2}{%
+        \hhut@tutorinfob@splitfalse
+    }{%
+        \def\hhut@value@tutorinfoaddress{#2}%
+        \hhut@tutorinfob@splittrue
+    }}
+\def\hhut@tutorinfob@value{%
+    \ifhhut@tutorinfob@split
+        \hhut@tutorinfob@underline[355pt]{\hhut@value@tutorinfob}{\hhut@value@tutorinfoaddress}%
+    \else
+        \hhutunderline[355pt]{\hhut@value@tutorinfob}%
+    \fi}
 \newcommand\degree[1]{\def\hhut@value@degree{#1}}
 \newcommand\major[1]{\def\hhut@value@major{#1}}
 \newcommand\submitdate[1]{\def\hhut@value@submitdate{#1}}
@@ -1919,9 +1941,9 @@
             \else \ifhhut@nonfulltimemaster \hhut@label@professional@tutora
                 \else \hhut@label@tutor \fi\fi}%
         \hhutunderline[355pt]{\hhut@value@tutorinfoa}\\
-        {\ifhhut@professionalmaster \hhut@label@professional@tutorb \hhutunderline[355pt]{\hhut@value@tutorinfob}
-            \else \ifhhut@nonfulltimemaster \hhut@label@professional@tutorb \hhutunderline[355pt]{\hhut@value@tutorinfob}
-                \else \rightline{\hhutunderline[355pt]{\hhut@value@tutorinfob}}\fi\fi}\\
+        {\ifhhut@professionalmaster \hhut@label@professional@tutorb \hhut@tutorinfob@value
+            \else \ifhhut@nonfulltimemaster \hhut@label@professional@tutorb \hhut@tutorinfob@value
+                \else \rightline{\hhut@tutorinfob@value}\fi\fi}\\
         \noindent\hhut@label@degree%
         \hhutunderline[120pt]{\hhut@value@degree}%
         \hfill
