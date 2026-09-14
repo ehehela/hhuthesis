@@ -553,7 +553,7 @@ numbersep=-1em
     }
     \vskip 40pt
     \begin{center}
-        \includegraphics[height=25mm]{hhuname.pdf}\\
+        \includegraphics[height=22mm]{hhuname.pdf}\\
         \vskip 10pt
         \def\ULthickness{2pt}
         {\ifhhut@doctor \songti \zihao{2} \hhut@label@thesistitle@doctor
