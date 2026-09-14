@@ -667,6 +667,17 @@
 %   \makeinfo  
 % \end{latex}
 %
+% \DescribeMacro{\infolinespacing}
+% 命令\cs{infolinespacing}用于设置中文信息封面各排版行之间的行距。
+% 参数为相对于当前字号基准行距的倍数，默认值为3.0。
+% 用户可以根据页面视觉效果在调用\cs{makeinfo}之前调整该参数。
+% 例如：
+% \begin{latex}
+%   \infolinespacing{2.8}
+%   \makeinfo
+% \end{latex}
+% 如果不调用\cs{infolinespacing}，则使用默认值3.0。
+%
 % \subsubsection{英文信息封面}
 % \DescribeMacro{\makeeninfo}
 % 命令\cs{makeeninfo}用于生成英文信息封面。此命令必须被用在\cs{begindocument}命令之后
@@ -1241,6 +1252,7 @@
 % 使用\pkg{ulem} 宏包控制下划线。
 %    \begin{macrocode}
 \RequirePackage[normalem]{ulem}
+\RequirePackage{xeCJKfntef}
 %    \end{macrocode}
 %
 % 使用\pkg{indentfirst} 宏包使各章第一节首行缩进。
@@ -1830,6 +1842,29 @@
 \def\hhut@underline[#1]#2{%
 \underline{\hbox to #1{\hfill#2\hfill}}}
 \def\hhutunderline{\@ifnextchar[\hhut@underline\underline}
+\newbox\hhut@cover@labelbox
+\newbox\hhut@cover@valuebox
+\def\hhut@cover@shortfield#1{%
+    \uline{\hfill#1\hfill}}
+\def\hhut@cover@longfield#1{%
+    \expandafter\uline\expandafter{#1\hfill}}
+\def\hhut@cover@adaptivefield#1#2{%
+    \begingroup
+        \let\\\space
+        \setbox\hhut@cover@labelbox=\hbox{#1}%
+        \setbox\hhut@cover@valuebox=\hbox{#2}%
+        \ifdim\wd\hhut@cover@valuebox>\dimexpr\hsize-\wd\hhut@cover@labelbox\relax
+            \endgroup
+            #1\hhut@cover@longfield{#2}%
+        \else
+            \endgroup
+            #1\hhut@cover@shortfield{#2}%
+        \fi}
+\def\hhut@cover@linespacing{3.0}
+\newcommand\infolinespacing[1]{%
+    \def\hhut@cover@linespacing{#1}}
+\def\hhut@cover@row#1{%
+    \noindent#1\par}
 % 为导师单位和地址提供同一条下划线内的左右对齐排版。
 \def\hhut@tutorinfob@underline[#1]#2#3{%
 \underline{\hbox to #1{%
@@ -2034,76 +2069,114 @@
 %
 % 定义\cs{makeinfo} 命令用于生成\hhuthesis{} 论文中文信息封面。
 %    \begin{macrocode}
-\newcommand\makeinfo[1]%
+\newcommand\makeinfo%
 {
     \newpage
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@cover}{cover}
-    \begin{spacing}{3.0}
+    \begin{spacing}{\hhut@cover@linespacing}
     {\songti \zihao{4}
-    \noindent\hhut@label@cover@classification%
-    \hhutunderline[69pt]{\hhut@value@classification}%
-    \hspace{6pt}
-    \hhut@label@cover@udc%
-    \hhutunderline[69pt]{\hhut@value@udc}%
-    \hspace{6pt}
-    \hhut@label@cover@securitylevel%
-    \hhutunderline[90pt]{\hhut@value@securitylevel}\\
-    \noindent\hhut@label@cover@author%
-    \hhutunderline[84pt]{\hhut@value@author}%
-    \hspace{6pt}
-    \hhut@label@cover@studentnumber%
-    \hhutunderline[102pt]{\hhut@value@studentnumber}%
-    \hspace{6pt}
-    \hhut@label@cover@institute%
-    \hhutunderline[96pt]{\hhut@value@institute}\\
-    \noindent\hhut@label@cover@zhtitle%
-    \hhutunderline[361pt]{\hhut@value@zhtitle}\\
-    \noindent\hhut@label@cover@zhsubtitle%
-    \hhutunderline[345pt]{\hhut@value@zhsubtitle}\\
-    \noindent\hhut@label@cover@entitle%
-    \uline{\hhut@value@entitle}\\
-    \noindent\hhut@label@cover@ensubtitle%
-    \hhutunderline[345pt]{\hhut@value@ensubtitle}\\
-    \noindent\hhut@label@cover@thesislang%
-    \hhutunderline[40pt]{\hhut@value@thesislang}%
-    \hhut@label@cover@abstractlang%
-    \hhutunderline[60pt]{\hhut@value@abstractlang}%
-    \hhut@label@cover@thesispages%
-    \hhutunderline[30pt]{\hhut@value@thesispages}%
-    \hhut@label@cover@numofwords%
-    \hhutunderline[30pt]{\hhut@value@numofwords}
-    \hhut@label@cover@unitofwords\\
-    \noindent\hhut@label@cover@thesiskeywords%
-    \hhutunderline[373pt]{\hhut@value@thesiskeywords}\\
-    \noindent\hhut@label@cover@degree%
-    \hhutunderline[90pt]{\hhut@value@degree}%
-    \hfill
-    \hhut@label@cover@major%
-    \hhutunderline[210pt]{\hhut@value@major}\\
-    \noindent\hhut@label@cover@researchfield%
-    \hhutunderline[387pt]{\hhut@value@researchfield}\\
-    {\ifhhut@professionalmaster
-        \noindent\hhut@label@cover@professional@tutora%
-        \hhutunderline[90pt]{\hhut@value@tutora}%
-        \hfill
-        \hhut@label@cover@professional@tutorinstitute%
-        \hhutunderline[210pt]{\hhut@value@tutorainstitute}\\
-        \noindent\hhut@label@cover@professional@tutorb%
-        \hhutunderline[90pt]{\hhut@value@tutorb}%
-        \hfill
-        \hhut@label@cover@professional@tutorinstitute%
-        \hhutunderline[210pt]{\hhut@value@tutorbinstitute}\\            
-    \else
-        \noindent\hhut@label@cover@tutor%
-        \hhutunderline[90pt]{\hhut@value@tutor}%
-        \hfill
-        \hhut@label@cover@tutorinstitute%
-        \hhutunderline[210pt]{\hhut@value@tutorinstitute}\\
-    \fi}
-    \noindent\hhut@label@cover@defenddate%
-    \hhutunderline[357pt]{\hhut@value@defenddate}
+    \parindent=0pt
+    \hsize=\linewidth
+        \hhut@cover@row{%
+            \hhut@label@cover@classification%
+            \hhut@cover@shortfield{\hhut@value@classification}%
+            \hspace{6pt}%
+            \hhut@label@cover@udc%
+            \hhut@cover@shortfield{\hhut@value@udc}%
+            \hspace{6pt}%
+            \hhut@label@cover@securitylevel%
+            \hhut@cover@shortfield{\hhut@value@securitylevel}%
+        }
+        \hhut@cover@row{%
+            \hhut@label@cover@author%
+            \hhut@cover@shortfield{\hhut@value@author}%
+            \hspace{6pt}%
+            \hhut@label@cover@studentnumber%
+            \hhut@cover@shortfield{\hhut@value@studentnumber}%
+            \hspace{6pt}%
+            \hhut@label@cover@institute%
+            \hhut@cover@shortfield{\hhut@value@institute}%
+        }
+        \hhut@cover@row{%
+            \hhut@cover@adaptivefield
+                {\hhut@label@cover@zhtitle}
+                {\hhut@value@zhtitle}%
+        }
+        \hhut@cover@row{%
+            \hhut@cover@adaptivefield
+                {\hhut@label@cover@zhsubtitle}
+                {\hhut@value@zhsubtitle}%
+        }
+        \hhut@cover@row{%
+            \hhut@cover@adaptivefield
+                {\hhut@label@cover@entitle}
+                {\hhut@value@entitle}%
+        }
+        \hhut@cover@row{%
+            \hhut@cover@adaptivefield
+                {\hhut@label@cover@ensubtitle}
+                {\hhut@value@ensubtitle}%
+        }
+        \hhut@cover@row{%
+            \hhut@label@cover@thesislang%
+            \hhut@cover@shortfield{\hhut@value@thesislang}%
+            \hspace{6pt}%
+            \hhut@label@cover@abstractlang%
+            \hhut@cover@shortfield{\hhut@value@abstractlang}%
+            \hspace{6pt}%
+            \hhut@label@cover@thesispages%
+            \hhut@cover@shortfield{\hhut@value@thesispages}%
+            \hspace{6pt}%
+            \hhut@label@cover@numofwords%
+            \hhut@cover@shortfield{\hhut@value@numofwords}%
+            \nobreak\mbox{\hhut@label@cover@unitofwords}%
+        }
+        \hhut@cover@row{%
+            \hhut@cover@adaptivefield
+                {\hhut@label@cover@thesiskeywords}
+                {\hhut@value@thesiskeywords}%
+        }
+        \hhut@cover@row{%
+            \hhut@label@cover@degree%
+            \hhut@cover@shortfield{\hhut@value@degree}%
+            \hspace{6pt}%
+            \hhut@label@cover@major%
+            \hhut@cover@shortfield{\hhut@value@major}%
+        }
+        \hhut@cover@row{%
+            \hhut@label@cover@researchfield%
+            \hhut@cover@shortfield{\hhut@value@researchfield}%
+        }
+        \ifhhut@professionalmaster
+            \hhut@cover@row{%
+                \hhut@label@cover@professional@tutora%
+                \hhut@cover@shortfield{\hhut@value@tutora}%
+                \hspace{6pt}%
+                \hhut@label@cover@professional@tutorinstitute%
+                \hhut@cover@shortfield{\hhut@value@tutorainstitute}%
+            }
+            \hhut@cover@row{%
+                \hhut@label@cover@professional@tutorb%
+                \hhut@cover@shortfield{\hhut@value@tutorb}%
+                \hspace{6pt}%
+                \hhut@label@cover@professional@tutorinstitute%
+                \hhut@cover@shortfield{\hhut@value@tutorbinstitute}%
+            }
+        \else
+            \hhut@cover@row{%
+                \hhut@label@cover@tutor%
+                \hhut@cover@shortfield{\hhut@value@tutor}%
+                \hspace{6pt}%
+                \hhut@label@cover@tutorinstitute%
+                \hhut@cover@shortfield{\hhut@value@tutorinstitute}%
+            }
+        \fi
+        \hhut@cover@row{%
+            \hhut@label@cover@defenddate%
+            \hhut@cover@shortfield{\hhut@value@defenddate}%
+        }
     }
     \end{spacing}
     \clearpage
