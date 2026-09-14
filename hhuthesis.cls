@@ -554,21 +554,27 @@ numbersep=-1em
     \vskip 40pt
     \begin{center}
         \includegraphics[height=22mm]{hhuname.pdf}\\
-        \vskip 10pt
+        \vskip 30pt
         \def\ULthickness{2pt}
         {\ifhhut@doctor \songti \zihao{2} \hhut@label@thesistitle@doctor
         \else \ifhhut@academicmaster \songti \zihao{2} \hhut@label@thesistitle@academic
             \else \ifhhut@professionalmaster \songti \zihao{2} \hhut@label@thesistitle@professional
                 \else \ifhhut@nonfulltimemaster \songti \zihao{2} \hhut@label@thesistitle@nonfulltime
                     \else \songti \zihao{2} \hhut@label@thesistitle@bachelor \fi\fi\fi\fi}% 学位论文
-        \begin{spacing}{2.5}
-        {\heiti \zihao{1}
-        \hhut@value@title
-        }
-        \end{spacing}
-        \vskip 30pt
+        \vfill
+        % 将题目作为完整盒子排版，避免外部行距及 spacing 收尾补偿影响居中。
+        \nointerlineskip
+        \vbox{%
+            \hsize=\linewidth\relax
+            \centering
+            \setstretch{1.15}
+            \heiti \zihao{1}
+            \hhut@value@title\par
+        }%
+        \nointerlineskip
+        \vfill
         {\songti \zihao{4} \hhut@value@author}
-        \vskip 30pt
+        \vskip 50pt
     \end{center}
     \begin{spacing}{2.0}
     {\songti \zihao{4}
@@ -612,8 +618,9 @@ numbersep=-1em
             \hhutunderline[54pt]{\hhut@value@reviewere} \fi}%
     }
     \end{spacing}
+    % \vfill
+    \vskip 50pt
     \begin{center}
-        %\vskip 20pt
         {\songti \zihao{4}
         \hhut@value@nlcdate \hspace{24pt} \hhut@value@nlclocate}
     \end{center}
