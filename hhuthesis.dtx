@@ -1100,7 +1100,9 @@
 \def\hhut@label@studentnumber{学号：}
 \def\hhut@label@classification{分类号：}
 \def\hhut@label@securitylevel{密级：}
-\def\hhut@label@udc{U~D~C：}
+\def\hhut@label@udc{%
+    \hbox to 3em{U\hfil D\hfil C}：%
+}
 \def\hhut@label@thesistitle@doctor{博士学位论文}
 \def\hhut@label@thesistitle@academic{硕士学位论文}
 \def\hhut@label@thesistitle@professional{全日制工程硕士专业学位论文}
@@ -1903,17 +1905,25 @@
     \pdfbookmark[0]{\hhut@label@nlc}{nlc}
     {\songti \zihao{4}
         \vskip 10pt
-        \makebox[40pt][r]{\hhut@label@classification}
-        \hhutunderline[150pt]{\hhut@value@classification}
-        \hfill
-        \makebox[40pt][r]{\hhut@label@studentnumber}
-        \hhutunderline[90pt]{\hhut@value@studentnumber}
+        \noindent
+        \hbox to \linewidth{%
+            \makebox[4em][r]{\hhut@label@classification}%
+            \hhutunderline[90pt]{\hhut@value@classification}%
+            \hfill
+            \makebox[4em][r]{\hhut@label@studentnumber}%
+            \hhutunderline[90pt]{\hhut@value@studentnumber}%
+        }%
+        \par
         \vskip 10pt
-        \makebox[40pt][r]{\hhut@label@udc}
-        \hhutunderline[150pt]{\hhut@value@udc}
-        \hfill
-        \makebox[40pt][r]{\hhut@label@securitylevel}
-        \hhutunderline[90pt]{\hhut@value@securitylevel}
+        \noindent
+        \hbox to \linewidth{%
+            \makebox[4em][r]{\hhut@label@udc}%
+            \hhutunderline[90pt]{\hhut@value@udc}%
+            \hfill
+            \makebox[4em][r]{\hhut@label@securitylevel}%
+            \hhutunderline[90pt]{\hhut@value@securitylevel}%
+        }%
+        \par
     }
     \vskip 40pt
     \begin{center}
