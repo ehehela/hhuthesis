@@ -694,6 +694,8 @@ numbersep=-1em
     \pdfbookmark[0]{\hhut@label@cover}{cover}
     \begin{spacing}{\hhut@cover@linespacing}
     {\songti \zihao{4}
+    % 封面字段下划线应连续覆盖中文标签后的区域。
+    \xeCJKsetup{CJKecglue={}}
     \parindent=0pt
     \hsize=\linewidth
         \hhut@cover@row{%
