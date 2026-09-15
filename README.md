@@ -1,179 +1,85 @@
-[![GitHub downloads](https://img.shields.io/github/downloads/caowenhan/hhuthesis/total)](https://github.com/caowenhan/hhuthesis/releases)
-
-[![GitHub commits](https://img.shields.io/github/commits-since/caowenhan/hhuthesis/latest)](https://github.com/caowenhan/hhuthesis/commits/master)
-
-[![GitHub release](https://img.shields.io/github/v/release/caowenhan/hhuthesis)](https://github.com/caowenhan/hhuthesis/releases/latest)
-
 # hhuthesis
 
-**Latest Version: `v3.3.0`**
+[![GitHub downloads](https://img.shields.io/github/downloads/ehehela/hhuthesis/total)](https://github.com/ehehela/hhuthesis/releases)
+[![GitHub commits](https://img.shields.io/github/commits-since/ehehela/hhuthesis/latest)](https://github.com/ehehela/hhuthesis/commits/master)
+[![GitHub release](https://img.shields.io/github/v/release/ehehela/hhuthesis)](https://github.com/ehehela/hhuthesis/releases/latest)
 
-Scroll down for the English version of README.
+河海大学学位论文 LaTeX 模板。
 
-## 欢迎使用hhuthesis (河海大学论文模板)
+## 项目说明
 
-**hhuthesis** 是 **h**o**h**ai **u**niversity **thesis** LaTeX Template 的缩写。
+本仓库基于[上游 hhuthesis 项目](https://github.com/caowenhan/hhuthesis)维护。
 
-此项目针对学位论文中存在的图表格式、公式格式、书写格式不规范等问题，提供了一个简单易用的河海大学学位论文LaTeX模板，该模板严格遵循河海大学学术委员会对学位论文的排版格式要求以及相应的国家标准规范。
+本仓库的主要修改针对博士研究生学位论文的排版格式，相关修改只在 `doctor` 场景下验证通过。
 
-**目前模板试用升级频繁，在开始使用前请确保您已经认真完整地阅读了使用说明文档和示例代码。**
+当前版本为 `v3.3.0`。
 
-**目前模板试用升级频繁，在开始使用前请确保您已经认真完整地阅读了使用说明文档和示例代码。**
+## 快速开始
 
-**目前模板试用升级频繁，在开始使用前请确保您已经认真完整地阅读了使用说明文档和示例代码。**
+模板使用 XeLaTeX 编译，论文源文件应采用 UTF-8 编码，参考文献使用 biber 处理。
 
-### 项目主页
+下载并解压 Release 中的模板压缩包。
+压缩包已经包含可直接使用的 `hhuthesis.cls`、`hhuthesis-example.tex`、`chapters/`、`reference/` 和 `figures/` 等文件，无需另外复制示例文件或先生成文类文件。
 
-本项目主页地址为：[https://github.com/caowenhan/hhuthesis]
+直接在 `hhuthesis-example.tex` 中修改论文信息，并根据需要编辑 `chapters/`、`reference/` 和 `figures/` 中的内容。
 
-### 下载
+### 如何编译 PDF
 
-[下载zip压缩包][zip]，Windows用户适用。
+请先确保系统已安装支持 XeLaTeX、biber 和 latexmk 的 TeX 环境。
 
-[下载tar.gz压缩包][tar]，Linux和MacOS用户适用。
+在解压后的模板目录中打开终端，执行以下命令：
 
-~~[zip]: https://codeload.github.com/caowenhan/hhuthesis/zip/v1.0.0~~
-~~[tar]:https://codeload.github.com/caowenhan/hhuthesis/tar.gz/v1.0.0~~
+~~~text
+latexmk hhuthesis-example.tex
+~~~
 
-### 安装使用
+`latexmk` 会根据随模板提供的 `latexmkrc` 自动调用 XeLaTeX 和 biber，并完成交叉引用所需的多轮编译。
+编译完成后，生成的 PDF 文件为 `hhuthesis-example.pdf`。
 
-参见[用户手册][manual]中相关章节的详细说明。  
+如需清理编译生成的辅助文件，可执行：
 
-[manual]:https://github.com/caowenhan/hhuthesis/blob/master/hhuthesis.pdf
+~~~text
+latexmk -c
+~~~
 
-### 功能特色
+完整的使用说明请参阅[用户手册](hhuthesis.pdf)，示例文档请参阅 `hhuthesis-example.tex` 及 `chapters/`、`reference/` 和 `figures/` 目录。
 
-- 此模板用于生成符合河海大学学位论文排版要求和相应的国家规范、行业标准的学位论文；
-- 可排版博士学位论文、硕士学位论文、（非）全日制专业学位硕士论文、本科毕业论文；
-- 使用XeLaTeX作为排版引擎，论文源码需要使用UTF-8编码；
-- 自动生成国家图书馆封面、中文信息封面、英文信息封面、学位论文原创性声明&论文出版授权书、前言、中文摘要页、英文摘要页等必需页面；
+## 文件说明
 
-### 模板组成
+- `hhuthesis.dtx`：模板源文件及使用说明文档的源代码；
+- `hhuthesis.ins`：使用 DocStrip 生成文类文件的驱动文件；
+- `hhuthesis.cls`：供论文调用的文类文件；
+- `hhuthesis.pdf`：模板使用手册；
+- `hhuthesis-example.tex`：博士学位论文示例文档；
+- `chapters/`、`reference/`、`figures/`：示例文档的章节、参考文献和图片；
+- `hhuthesis-build.cmd`、`hhuthesis-build.sh`：源码仓库中用于重新生成文类、使用手册和示例 PDF 的构建脚本；
+- `hhuthesis-run.cmd`、`hhuthesis-run.sh`：源码仓库中的示例文档运行脚本；
+- `license.txt`：许可证文本。
 
-- 开发文件
-  - `hhuthesis.ins`
-  - `hhuthesis.dtx`
-- 构建脚本
-  - `hhuthesis-build.cmd`
-  - `hhuthesis-build.sh`
-- 核心文档
-  - `hhuthesis.cls`
-- 配置文件
-  - `hhuthesis-run.sh`
-  - `hhuthesis-run.cmd`
-  - `latexmkrc`
-- 附属文件
-  - `hhuname.pdf`
-- 使用示例
-  - `hhuthesis-example.tex`
-- 其他文件
-  - `README.md`
-  - `license`
-### 遵循的规范和标准
+如需修改模板本身，应优先编辑 `hhuthesis.dtx`，再在源码仓库中运行 `hhuthesis-build.cmd` 或 `hhuthesis-build.sh` 生成 `hhuthesis.cls`，以保持源文件与发布文件一致。
 
-- 学位论文编写规则(GB/T 7713.1-2006)
-- 信息与文献参考文献著录规则(GB/T 7714-2015)
-- 科技文献的章节编号方法(CY/T 35-2001)
-- 河海大学博士(硕士)学位论文编写格式规定（2020.09.29发布）
+## 参考规范
 
-### 重要提醒
+模板的格式调整主要参考以下文件：
 
-1. 本模板未经学校相关部门审核及授权，使用前请务必斟酌。
-2. 本模板处于不定期更新中，在撰写论文的过程中，请确保为最新版本。
-3. 任何由于使用本模板而引起的论文格式审查问题均与本模板作者无关。
+- 《河海大学博士（硕士）学位论文编写格式规定》（2020 年 9 月 29 日发布）；
+- 《学位论文编写规则》（GB/T 7713.1-2006）；
+- 《信息与文献 参考文献著录规则》（GB/T 7714-2015）；
+- 《科技文献的章节编号方法》（CY/T 35-2001）。
 
-### 贡献
+## 使用须知
 
-如果您有任何改进意见或者功能需求，欢迎提交[Issue][Issues]或 [pull request][pull requests]，也可以发送邮件至[作者邮箱][email address]。
+本模板不是河海大学相关部门发布或授权的官方模板。
 
-[Issues]: https://github.com/caowenhan/hhuthesis/issues
-[pull requests]: https://github.com/caowenhan/hhuthesis/pulls
-[email address]: <caowenhan@hhu.edu.cn>
+本版本主要面向博士研究生学位论文，尚未验证其它论文模式的格式效果。
 
-### 许可证
+学校的论文格式要求可能发生变化，使用前请结合最新要求和用户手册检查生成结果。
 
-本模板发布遵守[LaTeX Project Public License](http://www.latex-project.org/lppl.txt) （版本 1.3c 或更高）。
+因使用本模板产生的格式审查、提交或其他问题，由使用者自行确认和承担。
 
-<br>
+## 贡献与许可
 
-## Welcome to hhuthesis (LaTeX thesis template for Hohai University)
+欢迎通过[Issue](https://github.com/ehehela/hhuthesis/issues)或 [Pull Request](https://github.com/ehehela/hhuthesis/pulls)反馈问题和改进建议。
 
-**hhuthesis** is an abbreviation of **h**o**h**ai **u**niversity **thesis** LaTeX Template.
-
-Aiming at the dissertations nonstandard format problems such as chart format, writing format and formula format, a simple and easy-to-use LaTeX template for Hohai dissertations is provided. The template strictly follows the requirements of the academic committee of Hohai University on the format of the dissertations and the corresponding national standards and specifications.
-
-**At present, the template trial upgrade frequently. Please make sure you have read the usage documentation and example code completely and carefully before using.**
-
-### Project Homepage
-
-Homepage of this project: [https://github.com/caowenhan/hhuthesis]
-
-### Download
-
-[Download ZIP][zip], for Windows Users.
-[Download Tar][tar], for Linux and MacOS Users.
-
-~~[zip]: https://codeload.github.com/caowenhan/hhuthesis/zip/v1.0.0~~
-~~[tar]:https://codeload.github.com/caowenhan/hhuthesis/tar.gz/v1.0.0~~
-
-### Installation and Use
-
-Refer to the relevant section of the [User Manual][manual] for detailed instrucitons.
-
-[manual]: https://github.com/caowenhan/hhuthesis/blob/master/hhuthesis.pdf
-
-### Features
-- `hhuthesis` can be used to produce dissertations in accordance with the typesetting requirements of Hohai University and corresponding national norms and industry standards.
-- `hhuthesis` can be used to complie doctor's thesis, master's thesis, (non-)full-time professional master's thesis ，bachelor‘s thesis.
-- `hhuthesis` is supported by XeLaTeX engines and only allows UTF-8 encoding.
-- `hhuthesis` automatically generate the National Library cover, Chinese Information cover, English information cover, thesis origanality statement & thesis publishing authorization, preface, Chinese abstract, English abstract and other necessary pages.
-
-### Components
-- Development files
-  - `hhuthesis.ins`
-  - `hhuthesis.dtx`
-- Build scripts
-  - `hhuthesis-build.cmd`
-  - `hhuthesis-build.sh`
-- Main template class:
-  - `hhuthesis.cls`
-- Configuration files:
-  - `hhuthesis-run.sh`
-  - `hhuthesis-run.cmd`
-  - `latexmkrc`
-- Affiliated files:
-  - `hhuname.pdf`
-- Demo
-  - `hhuthesis-example.tex`
-- Other files:
-  - `README.md`
-  - `license`
-
-### Guidelines and Standards to follow
-
-- Presentation of theses and dissertations[GB/T 7713.1-2006]
-- Information and documention—Rules for bibliographic references and citations to information resources[GB/T 7714-2015]
-- Numbering of divisions and subdivisions in scientific and technical documents[CY/T 35-2001]
-- Rules of Hohai University for the format of doctoral & master's dissertations[Released on Sep. 29, 2020]
-
-### Warnings
-1. `hhuthesis` has NOT been reviewed and authorized by the relevant department of the institute. Please consider carefully before using it.
-2. `hhuthesis` is still being updated irregularly. As you use it, make sure it is the latest version.
-3. Any problem of format censorship casused by the use of `hhuthsis` will NOT be concerned by the template author.
-
-### Contributing
-
-If you have any suggestions or functional requirements, [Issues][Issues] and [pull requests][pull requests] are welcome. You also can send emails to [author's mailbox][email address]
-
-[Issues]: https://github.com/caowenhan/hhuthesis/issues
-[pull requests]: https://github.com/caowenhan/hhuthesis/pulls
-[email address]: <caowenhan@hhu.edu.cn>
-
-### License
-
-This work may be distributed and/or modified under the conditions of the [LaTeX Project Public License](http://www.latex-project.org/lppl.txt), either version 1.3c of this license or (at your option) any later version.
-
-***
-
-Copyright (C) 2020-2023 by Wenhan Cao.
-
+本模板遵循 [LaTeX Project Public License](https://www.latex-project.org/lppl.txt)，版本 1.3c 或更高版本。
+许可证全文见 [`license.txt`](license.txt)。
