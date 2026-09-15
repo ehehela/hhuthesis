@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package template
+        run: |
+          package_dir="hhuthesis-${GITHUB_REF_NAME}"
+          mkdir "$package_dir"
+          cp hhuthesis.dtx hhuthesis.ins hhuthesis.cls dtx-style.sty \
+            hhuthesis-example.tex hhuname.pdf \
+            hhuthesis.pdf hhuthesis-example.pdf \
+            README.md license.txt latexmkrc "$package_dir"/
+          cp -r chapters reference figures "$package_dir"/
+          zip -r "${package_dir}.zip" "$package_dir"
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --title "hhuthesis ${GITHUB_REF_NAME}" \
+            --generate-notes \
+            --verify-tag \
+            --draft
+      - name: Upload template package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "${GITHUB_REF_NAME}" \
+            "hhuthesis-${GITHUB_REF_NAME}.zip"
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release edit "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --draft=false
