@@ -297,6 +297,21 @@
 %   \documentclass[tonefont,newtxopts={osf,smallerops}]{hhuthesis}
 % \end{latex}
 %
+% \subsubsection{匿名模式}
+% \DescribeOption{anonymous}
+% 选项\option{anonymous}用于生成匿名送审稿，默认不启用。
+% 该选项无需指定值，可与学位类型选项同时使用：
+% \begin{latex}
+%   % 博士论文匿名送审稿
+%   \documentclass[doctor,anonymous]{hhuthesis}
+% \end{latex}
+% 启用后，模板在生成各封面前清空中英文作者姓名、作者英文单位、学号、
+% 导师姓名及其职务、单位和地址，以及已设置的答辩委员会主席和成员姓名。
+% 具有固定下划线的字段仍保留下划线；未设置的末尾答辩委员会成员不会重新出现。
+% 英文信息封面不编排从 ``By'' 到 ``Dissertation Supervisor'' 的身份信息块，
+% \env{acknowledgement}环境对应的致谢页也不编排。
+% 论文题目、学位、学科专业和学校等非身份信息保持不变。
+%
 % \subsection{封面信息}
 % 封面信息可以通过\file{hhuthesis-example.tex}文件导言区的各设置命令统一设置完成。
 % 本节描述论文用于国家图书馆封面、中文信息封面和英文信息封面所需的内容替换命令。
@@ -990,17 +1005,21 @@
 % 
 % \subsection{定义选项}
 % 把没有定义的选项传递给底层的文档类，在这里为ctexbook。
-% 使用内核 l3keys 处理键值型选项（\option{tonefont} 和 \option{newtxopts}），
+% 使用内核 l3keys 处理键值型选项（\option{tonefont}、\option{newtxopts} 和
+% \option{anonymous}），
 % 并在 \cs{ProcessOptions} 之前先行处理，以避免键值选项被误传给底层类。
 %    \begin{macrocode}
 %<*cls>
 \def\hhut@newtxopts{}
 \newif\ifhhut@tonefont\hhut@tonefontfalse
+\newif\ifhhut@anonymous\hhut@anonymousfalse
 \DeclareKeys{
   tonefont .code:n = {\hhut@tonefonttrue},
   tonefont .default:n = {true},
   newtxopts .code:n = {\gdef\hhut@newtxopts{#1}},
   newtxopts .default:n = {},
+  anonymous .code:n = {\hhut@anonymoustrue},
+  anonymous .default:n = {true},
 }
 \ProcessKeyOptions[hhuthesis]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
@@ -1033,12 +1052,15 @@
   \def\hhut@optname{#1}%
   \def\hhut@testa{tonefont}%
   \def\hhut@testb{newtxopts}%
+  \def\hhut@testc{anonymous}%
   \ifx\hhut@optname\hhut@testa\else
     \ifx\hhut@optname\hhut@testb\else
-      \ifx\hhut@classlist\@empty
-        \edef\hhut@classlist{\hhut@curopt}%
-      \else
-        \edef\hhut@classlist{\hhut@classlist,\hhut@curopt}%
+      \ifx\hhut@optname\hhut@testc\else
+        \ifx\hhut@classlist\@empty
+          \edef\hhut@classlist{\hhut@curopt}%
+        \else
+          \edef\hhut@classlist{\hhut@classlist,\hhut@curopt}%
+        \fi
       \fi
     \fi
   \fi
@@ -1068,12 +1090,15 @@
   \ifx\hhut@cur\@empty\else
     \def\hhut@testa{tonefont}%
     \def\hhut@testb{newtxopts}%
+    \def\hhut@testc{anonymous}%
     \ifx\hhut@cur\hhut@testa\else
       \ifx\hhut@cur\hhut@testb\else
-        \ifx\hhut@cleanlist\@empty
-          \edef\hhut@cleanlist{\hhut@cur}%
-        \else
-          \edef\hhut@cleanlist{\hhut@cleanlist,\hhut@cur}%
+        \ifx\hhut@cur\hhut@testc\else
+          \ifx\hhut@cleanlist\@empty
+            \edef\hhut@cleanlist{\hhut@cur}%
+          \else
+            \edef\hhut@cleanlist{\hhut@cleanlist,\hhut@cur}%
+          \fi
         \fi
       \fi
     \fi
@@ -1948,6 +1973,7 @@
 % 定义\cs{makenlctitle} 命令用于生成\hhuthesis{}国家图书馆封面
 %    \begin{macrocode}
 \newcommand\makenlctitle{%
+    \hhut@applyanonymous
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@nlc}{nlc}
@@ -2057,6 +2083,7 @@
 % 定义\cs{makeverticaltitle}命令用于生成\hhuthesis{}论文中缝（书脊）页。
 %    \begin{macrocode}
 \newcommand\makeverticaltitle{
+   \hhut@applyanonymous
    \cleardoublepage
    \thispagestyle{empty}
    \pdfbookmark[0]{\hhut@label@spine}{spine}
@@ -2084,6 +2111,7 @@
 %    \begin{macrocode}
 \newcommand\makeinfo%
 {
+    \hhut@applyanonymous
     \newpage
     \cleardoublepage
     \thispagestyle{empty}
@@ -2212,11 +2240,42 @@
 \newcommand\englishdate[1]{\def\hhut@value@englishdate{#1}}
 \newcommand\enlocate[1]{\def\hhut@value@enlocate{#1}}
 \newcommand\englishdegree[1]{\def\hhut@value@englishdegree{#1}}
+\newcommand\hhut@anonymous@clear[1]{%
+    \expandafter\def\csname hhut@value@#1\endcsname{}}
+\newcommand\hhut@anonymous@clearreviewer[1]{%
+    \ifcsdef{hhut@value@reviewer#1}{%
+        \hhut@anonymous@clear{reviewer#1}}{}}
+\newcommand\hhut@applyanonymous{%
+    \ifhhut@anonymous
+        \hhut@anonymous@clear{author}
+        \hhut@anonymous@clear{englishauthor}
+        \hhut@anonymous@clear{englishdepartment}
+        \hhut@anonymous@clear{studentnumber}
+        \hhut@anonymous@clear{tutorinfoa}
+        \hhut@anonymous@clear{tutorinfob}
+        \hhut@anonymous@clear{tutorinfoaddress}
+        \hhut@anonymous@clear{tutor}
+        \hhut@anonymous@clear{tutorinstitute}
+        \hhut@anonymous@clear{tutora}
+        \hhut@anonymous@clear{tutorainstitute}
+        \hhut@anonymous@clear{tutorb}
+        \hhut@anonymous@clear{tutorbinstitute}
+        \hhut@anonymous@clear{entutor}
+        \hhut@anonymous@clear{chairman}
+        \hhut@anonymous@clearreviewer{a}
+        \hhut@anonymous@clearreviewer{b}
+        \hhut@anonymous@clearreviewer{c}
+        \hhut@anonymous@clearreviewer{d}
+        \hhut@anonymous@clearreviewer{e}
+        \hhut@anonymous@clearreviewer{f}
+        \hhut@anonymous@clearreviewer{g}
+    \fi}
 %    \end{macrocode}
 %
 % 定义\cs{makeeninfo} 命令用于生成\hhuthesis{} 论文英文信息封面。
 %    \begin{macrocode}
 \newcommand\makeeninfo{%
+    \hhut@applyanonymous
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@encover}{encover}
@@ -2227,12 +2286,22 @@
         \vskip 60pt
         {\rmfamily\zihao{4}\hhut@label@enstatement}
         \vskip 60pt
-        {\normalfont\rmfamily\zihao{4}\hhut@label@enby}\\
-        {\rmfamily \zihao{4} \textbf{\hhut@value@englishauthor}}\\
-        {\rmfamily \zihao{4} \textbf{(\hhut@value@englishdepartment)}}
+        \ifhhut@anonymous
+            {\rmfamily\zihao{4}\strut}\\
+            {\rmfamily\zihao{4}\strut}\\
+            {\rmfamily\zihao{4}\strut}
+        \else
+            {\normalfont\rmfamily\zihao{4}\hhut@label@enby}\\
+            {\rmfamily \zihao{4} \textbf{\hhut@value@englishauthor}}\\
+            {\rmfamily \zihao{4} \textbf{(\hhut@value@englishdepartment)}}
+        \fi
         \vskip 60pt
-        {\normalfont\rmfamily\zihao{4}\hhut@label@entutor
-        \rmfamily \zihao{4} \hhut@value@entutor}
+        \ifhhut@anonymous
+            {\rmfamily\zihao{4}\strut}
+        \else
+            {\normalfont\rmfamily\zihao{4}\hhut@label@entutor
+            \rmfamily \zihao{4} \hhut@value@entutor}
+        \fi
         \vskip 60pt
         {\rmfamily \zihao{4} \hhut@value@enlocate}\\
         {\noindent \rmfamily \zihao{4} \hhut@value@englishdate}
@@ -2386,12 +2455,15 @@
 %    \end{macrocode}
 %
 % \subsubsection{致谢页}
-% \env{acknowledgement}环境用于生成致谢页。
+% \env{acknowledgement}环境用于生成致谢页；启用\option{anonymous}时，
+% 该环境的标题和正文均不编排。
 %    \begin{macrocode}
-\newenvironment{acknowledgement}
-    {\chapter{\hhut@label@acknowledgement}
-    \songti
-    }{}
+\NewDocumentEnvironment{acknowledgement}{+b}{%
+    \ifhhut@anonymous\else
+        \chapter{\hhut@label@acknowledgement}
+        \songti
+        #1%
+    \fi}{}
 %    \end{macrocode}
 %
 % \subsubsection{主要符号对照表}

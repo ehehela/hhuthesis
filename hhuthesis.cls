@@ -27,11 +27,14 @@
 \ProvidesClass{hhuthesis}[2026/09/15 v3.3.0 hhuthesis document class]
 \def\hhut@newtxopts{}
 \newif\ifhhut@tonefont\hhut@tonefontfalse
+\newif\ifhhut@anonymous\hhut@anonymousfalse
 \DeclareKeys{
   tonefont .code:n = {\hhut@tonefonttrue},
   tonefont .default:n = {true},
   newtxopts .code:n = {\gdef\hhut@newtxopts{#1}},
   newtxopts .default:n = {},
+  anonymous .code:n = {\hhut@anonymoustrue},
+  anonymous .default:n = {true},
 }
 \ProcessKeyOptions[hhuthesis]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
@@ -50,12 +53,15 @@
   \def\hhut@optname{#1}%
   \def\hhut@testa{tonefont}%
   \def\hhut@testb{newtxopts}%
+  \def\hhut@testc{anonymous}%
   \ifx\hhut@optname\hhut@testa\else
     \ifx\hhut@optname\hhut@testb\else
-      \ifx\hhut@classlist\@empty
-        \edef\hhut@classlist{\hhut@curopt}%
-      \else
-        \edef\hhut@classlist{\hhut@classlist,\hhut@curopt}%
+      \ifx\hhut@optname\hhut@testc\else
+        \ifx\hhut@classlist\@empty
+          \edef\hhut@classlist{\hhut@curopt}%
+        \else
+          \edef\hhut@classlist{\hhut@classlist,\hhut@curopt}%
+        \fi
       \fi
     \fi
   \fi
@@ -75,12 +81,15 @@
   \ifx\hhut@cur\@empty\else
     \def\hhut@testa{tonefont}%
     \def\hhut@testb{newtxopts}%
+    \def\hhut@testc{anonymous}%
     \ifx\hhut@cur\hhut@testa\else
       \ifx\hhut@cur\hhut@testb\else
-        \ifx\hhut@cleanlist\@empty
-          \edef\hhut@cleanlist{\hhut@cur}%
-        \else
-          \edef\hhut@cleanlist{\hhut@cleanlist,\hhut@cur}%
+        \ifx\hhut@cur\hhut@testc\else
+          \ifx\hhut@cleanlist\@empty
+            \edef\hhut@cleanlist{\hhut@cur}%
+          \else
+            \edef\hhut@cleanlist{\hhut@cleanlist,\hhut@cur}%
+          \fi
         \fi
       \fi
     \fi
@@ -565,6 +574,7 @@ numbersep=-1em
 \newcommand\tutorb[1]{\def\hhut@value@tutorb{#1}}
 \newcommand\tutorbinstitute[1]{\def\hhut@value@tutorbinstitute{#1}}
 \newcommand\makenlctitle{%
+    \hhut@applyanonymous
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@nlc}{nlc}
@@ -670,6 +680,7 @@ numbersep=-1em
     \fi
 }
 \newcommand\makeverticaltitle{
+   \hhut@applyanonymous
    \cleardoublepage
    \thispagestyle{empty}
    \pdfbookmark[0]{\hhut@label@spine}{spine}
@@ -693,6 +704,7 @@ numbersep=-1em
 }
 \newcommand\makeinfo%
 {
+    \hhut@applyanonymous
     \newpage
     \cleardoublepage
     \thispagestyle{empty}
@@ -817,7 +829,38 @@ numbersep=-1em
 \newcommand\englishdate[1]{\def\hhut@value@englishdate{#1}}
 \newcommand\enlocate[1]{\def\hhut@value@enlocate{#1}}
 \newcommand\englishdegree[1]{\def\hhut@value@englishdegree{#1}}
+\newcommand\hhut@anonymous@clear[1]{%
+    \expandafter\def\csname hhut@value@#1\endcsname{}}
+\newcommand\hhut@anonymous@clearreviewer[1]{%
+    \ifcsdef{hhut@value@reviewer#1}{%
+        \hhut@anonymous@clear{reviewer#1}}{}}
+\newcommand\hhut@applyanonymous{%
+    \ifhhut@anonymous
+        \hhut@anonymous@clear{author}
+        \hhut@anonymous@clear{englishauthor}
+        \hhut@anonymous@clear{englishdepartment}
+        \hhut@anonymous@clear{studentnumber}
+        \hhut@anonymous@clear{tutorinfoa}
+        \hhut@anonymous@clear{tutorinfob}
+        \hhut@anonymous@clear{tutorinfoaddress}
+        \hhut@anonymous@clear{tutor}
+        \hhut@anonymous@clear{tutorinstitute}
+        \hhut@anonymous@clear{tutora}
+        \hhut@anonymous@clear{tutorainstitute}
+        \hhut@anonymous@clear{tutorb}
+        \hhut@anonymous@clear{tutorbinstitute}
+        \hhut@anonymous@clear{entutor}
+        \hhut@anonymous@clear{chairman}
+        \hhut@anonymous@clearreviewer{a}
+        \hhut@anonymous@clearreviewer{b}
+        \hhut@anonymous@clearreviewer{c}
+        \hhut@anonymous@clearreviewer{d}
+        \hhut@anonymous@clearreviewer{e}
+        \hhut@anonymous@clearreviewer{f}
+        \hhut@anonymous@clearreviewer{g}
+    \fi}
 \newcommand\makeeninfo{%
+    \hhut@applyanonymous
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@encover}{encover}
@@ -828,12 +871,22 @@ numbersep=-1em
         \vskip 60pt
         {\rmfamily\zihao{4}\hhut@label@enstatement}
         \vskip 60pt
-        {\normalfont\rmfamily\zihao{4}\hhut@label@enby}\\
-        {\rmfamily \zihao{4} \textbf{\hhut@value@englishauthor}}\\
-        {\rmfamily \zihao{4} \textbf{(\hhut@value@englishdepartment)}}
+        \ifhhut@anonymous
+            {\rmfamily\zihao{4}\strut}\\
+            {\rmfamily\zihao{4}\strut}\\
+            {\rmfamily\zihao{4}\strut}
+        \else
+            {\normalfont\rmfamily\zihao{4}\hhut@label@enby}\\
+            {\rmfamily \zihao{4} \textbf{\hhut@value@englishauthor}}\\
+            {\rmfamily \zihao{4} \textbf{(\hhut@value@englishdepartment)}}
+        \fi
         \vskip 60pt
-        {\normalfont\rmfamily\zihao{4}\hhut@label@entutor
-        \rmfamily \zihao{4} \hhut@value@entutor}
+        \ifhhut@anonymous
+            {\rmfamily\zihao{4}\strut}
+        \else
+            {\normalfont\rmfamily\zihao{4}\hhut@label@entutor
+            \rmfamily \zihao{4} \hhut@value@entutor}
+        \fi
         \vskip 60pt
         {\rmfamily \zihao{4} \hhut@value@enlocate}\\
         {\noindent \rmfamily \zihao{4} \hhut@value@englishdate}
@@ -941,10 +994,12 @@ numbersep=-1em
   {\endlist}
   {\item}
 \renewcommand{\bibfont}{\small}
-\newenvironment{acknowledgement}
-    {\chapter{\hhut@label@acknowledgement}
-    \songti
-    }{}
+\NewDocumentEnvironment{acknowledgement}{+b}{%
+    \ifhhut@anonymous\else
+        \chapter{\hhut@label@acknowledgement}
+        \songti
+        #1%
+    \fi}{}
 \newcommand{\hhut@denotation@name}{主要符号对照表}
 \newenvironment{denotation}[1][2.5cm]{
     \chapter{\hhut@denotation@name}
