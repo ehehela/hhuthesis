@@ -1530,15 +1530,15 @@
 		pagestyle = {hhut@headings},
         aftername = {\enspace},
         beforeskip= {16pt},
-		afterskip = {16pt},
+		afterskip = {18pt},
 		fixskip = true,
 	}
 }
 \ctexset{section={
 		format={\raggedright \rmfamily \heiti \zihao{3}},
         aftername = {\enspace},
-		beforeskip = {16pt},
-		afterskip = {16pt},
+		beforeskip = {20pt},
+		afterskip = {18pt},
 		fixskip = true,
 	}
 }
@@ -1546,15 +1546,15 @@
 		format={\raggedright \rmfamily \heiti \zihao{-3}},
         aftername = {\enspace},
 		beforeskip = {16pt},
-		afterskip = {12pt},
+		afterskip = {15pt},
 		fixskip=true,
 	}
 }
 \ctexset{subsubsection={
 		format={\raggedright \rmfamily \fangsong \zihao{4}},
         aftername = {\enspace},
-		beforeskip = {12pt},
-		afterskip = {12pt},
+		beforeskip = {14pt},
+		afterskip = {14pt},
 		fixskip=true,
 	}
 }
@@ -2225,10 +2225,10 @@
         {\rmfamily \zihao{4} \textbf{(\hhut@value@englishdepartment)}}
         \vskip 60pt
         {\normalfont\rmfamily\zihao{4}\hhut@label@entutor
-        \rmfamily \zihao{4} \textbf{\hhut@value@entutor}}
+        \rmfamily \zihao{4} \hhut@value@entutor}
         \vskip 60pt
-        {\rmfamily \zihao{4} \textbf{\hhut@value@enlocate}}\\
-        {\noindent \rmfamily \zihao{4} \textbf{\hhut@value@englishdate}}        
+        {\rmfamily \zihao{4} \hhut@value@enlocate}\\
+        {\noindent \rmfamily \zihao{4} \hhut@value@englishdate}
         \end{spacing}
     \end{center}
     \normalfont
@@ -2349,7 +2349,7 @@
 %    \end{macrocode}
 %
 % \subsubsection{参考文献}
-% 参考文献使用10号字，段前段后行距为0行。使用\pkg{biblatex} 宏包设置参考文献格式。
+% 参考文献使用五号字（10.5~bp），段前段后行距为0行。使用\pkg{biblatex} 宏包设置参考文献格式。
 %    \begin{macrocode}
 \defbibheading{bibliography}[\bibname]{%
   \chapter*{#1}%
@@ -2375,7 +2375,7 @@
       \sfcode`\.\@m}}
   {\endlist}
   {\item}
-\renewcommand{\bibfont}{\footnotesize}
+\renewcommand{\bibfont}{\small}
 %    \end{macrocode}
 %
 % \subsubsection{致谢页}

@@ -281,15 +281,15 @@ format = {\centering \rmfamily \heiti \zihao{-2}},
 pagestyle = {hhut@headings},
         aftername = {\enspace},
         beforeskip= {16pt},
-afterskip = {16pt},
+afterskip = {18pt},
 fixskip = true,
 }
 }
 \ctexset{section={
 format={\raggedright \rmfamily \heiti \zihao{3}},
         aftername = {\enspace},
-beforeskip = {16pt},
-afterskip = {16pt},
+beforeskip = {20pt},
+afterskip = {18pt},
 fixskip = true,
 }
 }
@@ -297,15 +297,15 @@ fixskip = true,
 format={\raggedright \rmfamily \heiti \zihao{-3}},
         aftername = {\enspace},
 beforeskip = {16pt},
-afterskip = {12pt},
+afterskip = {15pt},
 fixskip=true,
 }
 }
 \ctexset{subsubsection={
 format={\raggedright \rmfamily \fangsong \zihao{4}},
         aftername = {\enspace},
-beforeskip = {12pt},
-afterskip = {12pt},
+beforeskip = {14pt},
+afterskip = {14pt},
 fixskip=true,
 }
 }
@@ -828,10 +828,10 @@ numbersep=-1em
         {\rmfamily \zihao{4} \textbf{(\hhut@value@englishdepartment)}}
         \vskip 60pt
         {\normalfont\rmfamily\zihao{4}\hhut@label@entutor
-        \rmfamily \zihao{4} \textbf{\hhut@value@entutor}}
+        \rmfamily \zihao{4} \hhut@value@entutor}
         \vskip 60pt
-        {\rmfamily \zihao{4} \textbf{\hhut@value@enlocate}}\\
-        {\noindent \rmfamily \zihao{4} \textbf{\hhut@value@englishdate}}
+        {\rmfamily \zihao{4} \hhut@value@enlocate}\\
+        {\noindent \rmfamily \zihao{4} \hhut@value@englishdate}
         \end{spacing}
     \end{center}
     \normalfont
@@ -935,7 +935,7 @@ numbersep=-1em
       \sfcode`\.\@m}}
   {\endlist}
   {\item}
-\renewcommand{\bibfont}{\footnotesize}
+\renewcommand{\bibfont}{\small}
 \newenvironment{acknowledgement}
     {\chapter{\hhut@label@acknowledgement}
     \songti
