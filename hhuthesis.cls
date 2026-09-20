@@ -539,6 +539,11 @@ numbersep=-1em
 \newcommand\reviewere[1]{\def\hhut@value@reviewere{#1}}
 \newcommand\reviewerf[1]{\def\hhut@value@reviewerf{#1}}
 \newcommand\reviewerg[1]{\def\hhut@value@reviewerg{#1}}
+\newcommand\hhut@reviewercomma[1]{%
+    \ifcsdef{hhut@value@reviewer#1}{\hhut@label@comma}{}}
+\newcommand\hhut@reviewerfield[2]{%
+    \ifcsdef{hhut@value@reviewer#1}{%
+        \hhutunderline[54pt]{\csuse{hhut@value@reviewer#1}}#2}{}}
 \newcommand\nlcdate[1]{\def\hhut@value@nlcdate{#1}}
 \newcommand\nlclocate[1]{\def\hhut@value@nlclocate{#1}}
 \newcommand\vtitle[1]{\def\hhut@value@vtitle{#1}}
@@ -635,21 +640,21 @@ numbersep=-1em
         {\ifhhut@doctor \noindent\hhut@label@chairman%
         \hhutunderline[54pt]{\hhut@value@chairman}
         \hhut@label@reviewer%
-        \hhutunderline[54pt]{\hhut@value@reviewera}\hhut@label@comma
-        \hhutunderline[54pt]{\hhut@value@reviewerb}\hhut@label@comma
-        \hhutunderline[54pt]{\hhut@value@reviewerc}\hhut@label@comma\\
-        \noindent\hhutunderline[54pt]{\hhut@value@reviewerd}\hhut@label@comma
-        \hhutunderline[54pt]{\hhut@value@reviewere}\hhut@label@comma
-        \hhutunderline[54pt]{\hhut@value@reviewerf}\hhut@label@comma
-        \hhutunderline[54pt]{\hhut@value@reviewerg}
+        \hhut@reviewerfield{a}{\hhut@reviewercomma{b}}
+        \hhut@reviewerfield{b}{\hhut@reviewercomma{c}}
+        \hhut@reviewerfield{c}{\hhut@reviewercomma{d}}\\
+        \noindent\hhut@reviewerfield{d}{\hhut@reviewercomma{e}}
+        \hhut@reviewerfield{e}{\hhut@reviewercomma{f}}
+        \hhut@reviewerfield{f}{\hhut@reviewercomma{g}}
+        \hhut@reviewerfield{g}{}
             \else \noindent\hhut@label@chairman%
             \hhutunderline[54pt]{\hhut@value@chairman}
             \hhut@label@reviewer%
-            \hhutunderline[54pt]{\hhut@value@reviewera}\hhut@label@comma
-            \hhutunderline[54pt]{\hhut@value@reviewerb}\hhut@label@comma
-            \hhutunderline[54pt]{\hhut@value@reviewerc}\hhut@label@comma\\
-            \noindent\hhutunderline[54pt]{\hhut@value@reviewerd}\hhut@label@comma
-            \hhutunderline[54pt]{\hhut@value@reviewere} \fi}%
+            \hhut@reviewerfield{a}{\hhut@reviewercomma{b}}
+            \hhut@reviewerfield{b}{\hhut@reviewercomma{c}}
+            \hhut@reviewerfield{c}{\hhut@reviewercomma{d}}\\
+            \noindent\hhut@reviewerfield{d}{\hhut@reviewercomma{e}}
+            \hhut@reviewerfield{e}{} \fi}%
     }
     \end{spacing}
     % \vfill
