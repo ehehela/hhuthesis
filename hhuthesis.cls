@@ -201,8 +201,8 @@ For the Degree of\\
     paper=a4paper,%
     top=2.5cm,%
     bottom=2.5cm,%
-    left=2.7cm,%
-    right=2.7cm,%
+    left=3.0cm,%
+    right=2.4cm,%
     marginparwidth=2.4cm,%
     headheight=0.5cm,%
     footskip=0.7cm%
