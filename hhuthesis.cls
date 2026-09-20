@@ -559,7 +559,7 @@ numbersep=-1em
 \newcommand\tutorainstitute[1]{\def\hhut@value@tutorainstitute{#1}}
 \newcommand\tutorb[1]{\def\hhut@value@tutorb{#1}}
 \newcommand\tutorbinstitute[1]{\def\hhut@value@tutorbinstitute{#1}}
-\newcommand\makenlctitle[1]{%
+\newcommand\makenlctitle{%
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@nlc}{nlc}
@@ -812,7 +812,7 @@ numbersep=-1em
 \newcommand\englishdate[1]{\def\hhut@value@englishdate{#1}}
 \newcommand\enlocate[1]{\def\hhut@value@enlocate{#1}}
 \newcommand\englishdegree[1]{\def\hhut@value@englishdegree{#1}}
-\newcommand\makeeninfo[1]{%
+\newcommand\makeeninfo{%
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@encover}{encover}

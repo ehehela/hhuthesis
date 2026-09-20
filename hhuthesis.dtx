@@ -1940,7 +1940,7 @@
 %
 % 定义\cs{makenlctitle} 命令用于生成\hhuthesis{}国家图书馆封面
 %    \begin{macrocode}
-\newcommand\makenlctitle[1]{%
+\newcommand\makenlctitle{%
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@nlc}{nlc}
@@ -2209,7 +2209,7 @@
 %
 % 定义\cs{makeeninfo} 命令用于生成\hhuthesis{} 论文英文信息封面。
 %    \begin{macrocode}
-\newcommand\makeeninfo[1]{%
+\newcommand\makeeninfo{%
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@encover}{encover}
