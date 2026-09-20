@@ -17,7 +17,7 @@
 %
 % \iffalse
 %<*driver>
-\ProvidesFile{hhuthesis.dtx}[2026/09/15 3.3.0 Hohai University Thesis Template]
+\ProvidesFile{hhuthesis.dtx}[2026/09/20 3.4.0 Hohai University Thesis Template]
 \documentclass{ltxdoc}
 \usepackage{dtx-style}
 
@@ -992,7 +992,13 @@
 %                                新增 \cs{infolinespacing} 命令以调整中文信息封面行距；\newline
 %                                修复导师信息、论文标题、封面元数据及 logo 的排版对齐问题；\newline
 %                                修复附录中公式、图、表和代码编号问题；\newline
-%                                调整页面边注宽度\\\bottomrule
+%                                调整页面边注宽度\\
+% v3.4.0 & 2026/09/20 & 呼啦啦 & 新增 \texttt{anonymous} 文类选项，用于生成匿名送审稿；\newline
+%                                支持省略答辩委员会末尾成员；\newline
+%                                修复国家图书馆封面和英文信息封面生成命令误声明必选参数的问题；\newline
+%                                修复中文信息封面下划线断裂问题；\newline
+%                                按照博士学位论文格式要求调整章节标题间距、英文信息封面字体、\newline
+%                                参考文献字号及双面装订页边距\\\bottomrule
 % \end{longtable}
 %
 % \section{实现细节}
@@ -1000,7 +1006,7 @@
 % \subsection{基本信息}
 %    \begin{macrocode}
 %<cls>\NeedsTeXFormat{LaTeX2e}[2008/05/04]
-%<cls>\ProvidesClass{hhuthesis}[2026/09/15 v3.3.0 hhuthesis document class]
+%<cls>\ProvidesClass{hhuthesis}[2026/09/20 v3.4.0 hhuthesis document class]
 %    \end{macrocode}
 % 
 % \subsection{定义选项}
@@ -1130,7 +1136,7 @@
 %
 % 定义文档类的版本号字符串常量：
 %    \begin{macrocode}
-\def\hhut@value@templateversion{v3.3.0}
+\def\hhut@value@templateversion{v3.4.0}
 %    \end{macrocode}
 %
 % 定义版本号命令\cs{version}:
