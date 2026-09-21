@@ -948,59 +948,6 @@
 % 文档类\file{hhuthesis.cls}文件中定义了很多固定词汇以及数学符号，一般无须修改。如果有特殊需求，推荐在导言区使用
 % \cs{renewcommand}。当然，导言区可以直接使用中文。
 % 
-% \section{模板更新记录}
-% \begin{longtable}{p{2cm}p{2cm}p{2cm}p{6cm}}
-% \toprule
-% {\heiti 版本} & {\heiti 日期} & {\heiti 修订者} & {\heiti 修订历史}\\\midrule
-% \endfirsthead
-% \midrule
-% {\heiti 版本} & {\heiti 日期} & {\heiti 修订者} & {\heiti 修订历史}\\\midrule
-% \endhead
-% \endfoot
-% \endlastfoot
-% v1.0.0 & 2020/07/19 & 曹文翰 & 第一个可用版本\\
-% v2.0.0 & 2021/04/07 & 曹文翰 & 增加了论文中缝（书脊）页\newline
-%                                按照编写格式要求修改了论文国家图书馆封面、中文信息封面、英文信息封面和声明授权页\newline
-%                                修改了论文页眉，单页页眉改为“河海大学XX学位论文”，双页页眉改为“所在章节的一级标题名”，页眉下划线改为单线\newline
-%                                按照编写格式要求修改了论文章节标题的字体、字号、对齐方式、段前段后距离，\newline
-%                                修改了论文附录格式，去除了个人简历\newline
-%                                修复了参考文献格式，添加了文献标识符\\
-% v2.0.1 & 2026/05/07 & 呼啦啦 & 将 dtx 源文件与发布版 cls 对齐，确立 dtx 为第一手资料：\newline
-%                                补回 \pkg{indentfirst} 宏包（cls 中有但 dtx 中遗漏）\newline
-%                                补齐 dtx 代码块中缺失的行尾注释符，消除 docstrip 生成 cls 时宏定义中的多余空格\newline
-%                                修复因 dtx/cls 不同步导致的封面页排版异常\\
-% v2.0.2 & 2026/05/07 & 呼啦啦 & 将 logo 替换为高分辨率 PDF 版本，清理废弃图片文件\\
-% v3.0.0 & 2026/05/07 & 呼啦啦 & 参考文献后端由 natbib+BibTeX 迁移至 biblatex+biber，\newline
-%                                采用 biblatex-gb7714-2015 样式处理 GB/T 7714 标准格式，\newline
-%                                移除自定义 \cs{upcite} 命令（改用 biblatex 原生 \cs{cite}/\cs{supercite}），\newline
-%                                删除 hhuthesis-numeric.bst 文件\\
-% v3.1.0 & 2026/05/22 & 呼啦啦 & 不再默认加载 \pkg{bm} 宏包，建议用户在导言区末尾手动添加 \cs{usepackage\{bm\}}\newline
-%                                多行双语题注居中显示；英文题注标签缩写为 ``Fig.''\newline
-%                                为 \pkg{enumitem} 宏包添加 inline 选项以支持行内列表\\
-% v3.2.0 & 2026/05/22 & 呼啦啦 & 新增 \texttt{tonefont} 文类选项，切换至 T1 编码字体模式，\newline
-%                                通过 \pkg{newtx} 统一加载三族 Times 风格 Type1 字体，中文字体不变\\
-% v3.2.1 & 2026/05/22 & 呼啦啦 & 为 \pkg{ulem} 宏包添加 \texttt{normalem} 选项以恢复 \cs{emph} 的正常斜体行为，\newline
-%                                避免与 \pkg{algorithm2e} 的 \texttt{function} 环境标题冲突\\
-% v3.2.2 & 2026/05/22 & 呼啦啦 & 新增 \texttt{newtxopts} 键值型文类选项，\newline
-%                                透传选项至 \pkg{newtx}（需配合 \texttt{tonefont} 使用），\newline
-%                                未启用 \texttt{tonefont} 时静默忽略；\newline
-%                                改用内核 l3keys 处理 \texttt{tonefont} 和 \texttt{newtxopts} 选项，\newline
-%                                移除 \pkg{kvoptions} 依赖；\newline
-%                                修复键值选项导致的 "Unused global option" 警告\\
-% v3.3.0 & 2026/09/15 & 呼啦啦 & 支持 \cs{tutorinfob} 的单位与地址分离设置，并兼容原单参数用法；\newline
-%                                重构中文信息封面排版，支持长字段自适应换行；\newline
-%                                新增 \cs{infolinespacing} 命令以调整中文信息封面行距；\newline
-%                                修复导师信息、论文标题、封面元数据及 logo 的排版对齐问题；\newline
-%                                修复附录中公式、图、表和代码编号问题；\newline
-%                                调整页面边注宽度\\
-% v3.4.0 & 2026/09/20 & 呼啦啦 & 新增 \texttt{anonymous} 文类选项，用于生成匿名送审稿；\newline
-%                                支持省略答辩委员会末尾成员；\newline
-%                                修复国家图书馆封面和英文信息封面生成命令误声明必选参数的问题；\newline
-%                                修复中文信息封面下划线断裂问题；\newline
-%                                按照博士学位论文格式要求调整章节标题间距、英文信息封面字体、\newline
-%                                参考文献字号及双面装订页边距\\\bottomrule
-% \end{longtable}
-%
 % \section{实现细节}
 % 
 % \subsection{基本信息}

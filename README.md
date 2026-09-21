@@ -12,7 +12,7 @@
 
 本仓库的主要修改针对博士研究生学位论文的排版格式，相关修改只在 `doctor` 场景下验证通过。
 
-当前版本为 `v3.4.0`。
+当前版本为 `v3.4.0`，详细变更见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 快速开始
 
@@ -47,6 +47,7 @@ latexmk -c
 ## 文件说明
 
 - `hhuthesis.dtx`：模板源文件及使用说明文档的源代码；
+- `CHANGELOG.md`：模板的版本更新记录；
 - `hhuthesis.ins`：使用 DocStrip 生成文类文件的驱动文件；
 - `hhuthesis.cls`：供论文调用的文类文件；
 - `hhuthesis.pdf`：模板使用手册；
