@@ -104,6 +104,21 @@
 \def\hhut@cleanlist{}
 \expandafter\hhut@cleanunused\@unusedoptionlist,\@nil
 \let\@unusedoptionlist\hhut@cleanlist
+\newcommand\hhut@anonymous@mask[1]{%
+    \ifhhut@anonymous\phantom{#1}\else#1\fi}
+\AtEndDocument{%
+    \ifhhut@anonymous
+        \ClassWarningNoLine{hhuthesis}{%
+            Anonymous mode only handles identifying information%
+            \MessageBreak
+            managed by the template. It does not automatically%
+            \MessageBreak
+            anonymize content in the appendix (resume), main text,%
+            \MessageBreak
+            or references. Please review and edit any information%
+            \MessageBreak
+            that may reveal the author's identity}%
+    \fi}
 \renewcommand{\contentsname}{目录}
 \renewcommand{\listfigurename}{插图清单}
 \renewcommand{\listtablename}{附表清单}
@@ -169,7 +184,8 @@
 \def\hhut@label@encover{英文信息封面}
 \def\hhut@label@enstatement{
     Dissertation Submitted to\\
-{\rmfamily \zihao{4} \textbf{\hhut@value@eninstitute}}\\
+{\rmfamily \zihao{4} \textbf{%
+        \hhut@anonymous@mask{\hhut@value@eninstitute}}}\\
 In Fulfillment of the Requirement\\
 For the Degree of\\
 {\rmfamily \zihao{4} \textbf{\hhut@value@englishdegree}}\\
@@ -189,11 +205,11 @@ For the Degree of\\
 \def\hhut@label@originaldate{年\hspace{3em}月\hspace{3em}日}
 \def\hhut@label@authorization{学位论文使用授权说明：}
 \def\hhut@label@authorizationcontent{
-河海大学、中国科学技术信息研究所、国家图书馆、中国学术期刊
+\hhut@anonymous@mask{河海大学}、中国科学技术信息研究所、国家图书馆、中国学术期刊
 (光盘版)电子杂志社有权保留本人所送交学位论文的复印件或电子文档，
 可以采用影印、缩印或其他复制手段保存论文。本人电子文档的内容和
 纸质论文的内容相一致。除在保密期内的保密论文外，允许论文被查阅和
-借阅。论文全部或部分内容的公布(包括刊登)授权河海大学研究生院办
+借阅。论文全部或部分内容的公布(包括刊登)授权\hhut@anonymous@mask{河海大学}研究生院办
 理。
 }
 \RequirePackage{amsmath,amsthm,amsfonts,amssymb,mathrsfs}
@@ -347,9 +363,11 @@ fixskip=true,
 \fancypagestyle{hhut@headings}{%
 \fancyhf{}
 \fancyfoot[C]{\songti \zihao{-5} \thepage}
-    \fancyhead[CO]{ \ifhhut@doctor \zihao{-5} {\songti 河海大学博士学位论文}
-                        \else \ifhhut@bachelor \zihao{-5} {\songti 河海大学学士学位论文}
-                            \else \zihao{-5} {\songti 河海大学硕士学位论文}\fi\fi}
+    \fancyhead[CO]{ \zihao{-5}%
+        \hhut@anonymous@mask{%
+            \ifhhut@doctor {\songti 河海大学博士学位论文}
+            \else \ifhhut@bachelor {\songti 河海大学学士学位论文}
+                \else {\songti 河海大学硕士学位论文}\fi\fi}}
     \fancyhead[CE]{ \songti \zihao{-5} \leftmark}
 }
 \let\hhut@cleardoublepage\cleardoublepage
@@ -537,9 +555,11 @@ numbersep=-1em
     }}
 \def\hhut@tutorinfob@value{%
     \ifhhut@tutorinfob@split
-        \hhut@tutorinfob@underline[355pt]{\hhut@value@tutorinfob}{\hhut@value@tutorinfoaddress}%
+        \hhut@tutorinfob@underline[355pt]{%
+            \hhut@anonymous@mask{\hhut@value@tutorinfob}}{%
+            \hhut@anonymous@mask{\hhut@value@tutorinfoaddress}}%
     \else
-        \hhutunderline[355pt]{\hhut@value@tutorinfob}%
+        \hhutunderline[355pt]{\hhut@anonymous@mask{\hhut@value@tutorinfob}}%
     \fi}
 \newcommand\degree[1]{\def\hhut@value@degree{#1}}
 \newcommand\major[1]{\def\hhut@value@major{#1}}
@@ -558,7 +578,8 @@ numbersep=-1em
     \ifcsdef{hhut@value@reviewer#1}{\hhut@label@comma}{}}
 \newcommand\hhut@reviewerfield[2]{%
     \ifcsdef{hhut@value@reviewer#1}{%
-        \hhutunderline[54pt]{\csuse{hhut@value@reviewer#1}}#2}{}}
+        \hhutunderline[54pt]{%
+            \hhut@anonymous@mask{\csuse{hhut@value@reviewer#1}}}#2}{}}
 \newcommand\nlcdate[1]{\def\hhut@value@nlcdate{#1}}
 \newcommand\nlclocate[1]{\def\hhut@value@nlclocate{#1}}
 \newcommand\vtitle[1]{\def\hhut@value@vtitle{#1}}
@@ -580,7 +601,6 @@ numbersep=-1em
 \newcommand\tutorb[1]{\def\hhut@value@tutorb{#1}}
 \newcommand\tutorbinstitute[1]{\def\hhut@value@tutorbinstitute{#1}}
 \newcommand\makenlctitle{%
-    \hhut@applyanonymous
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@nlc}{nlc}
@@ -592,7 +612,8 @@ numbersep=-1em
             \hhutunderline[90pt]{\hhut@value@classification}%
             \hfill
             \makebox[4em][r]{\hhut@label@studentnumber}%
-            \hhutunderline[90pt]{\hhut@value@studentnumber}%
+            \hhutunderline[90pt]{%
+                \hhut@anonymous@mask{\hhut@value@studentnumber}}%
         }%
         \par
         \vskip 10pt
@@ -608,7 +629,11 @@ numbersep=-1em
     }
     \vskip 40pt
     \begin{center}
-        \includegraphics[height=22mm]{hhuname.pdf}\\
+        \ifhhut@anonymous
+            \phantom{\includegraphics[draft,height=22mm]{hhuname.pdf}}%
+        \else
+            \includegraphics[height=22mm]{hhuname.pdf}%
+        \fi\\
         \vskip 30pt
         \def\ULthickness{2pt}
         {\ifhhut@doctor \songti \zihao{2} \hhut@label@thesistitle@doctor
@@ -628,7 +653,7 @@ numbersep=-1em
         }%
         \nointerlineskip
         \vfill
-        {\songti \zihao{4} \hhut@value@author}
+        {\songti \zihao{4} \hhut@anonymous@mask{\hhut@value@author}}
         \vskip 50pt
     \end{center}
     \begin{spacing}{2.0}
@@ -637,7 +662,7 @@ numbersep=-1em
         {\ifhhut@professionalmaster \hhut@label@professional@tutora
             \else \ifhhut@nonfulltimemaster \hhut@label@professional@tutora
                 \else \hhut@label@tutor \fi\fi}%
-        \hhutunderline[355pt]{\hhut@value@tutorinfoa}\\
+        \hhutunderline[355pt]{\hhut@anonymous@mask{\hhut@value@tutorinfoa}}\\
         {\ifhhut@professionalmaster \hhut@label@professional@tutorb \hhut@tutorinfob@value
             \else \ifhhut@nonfulltimemaster \hhut@label@professional@tutorb \hhut@tutorinfob@value
                 \else \rightline{\hhut@tutorinfob@value}\fi\fi}\\
@@ -652,9 +677,9 @@ numbersep=-1em
         \hhut@label@defenddate%
         \hhutunderline[120pt]{\hhut@value@defenddate}\\
         \noindent\hhut@label@awarded%
-        \hhutunderline[313pt]{\hhut@value@awarded}\\
+        \hhutunderline[313pt]{\hhut@anonymous@mask{\hhut@value@awarded}}\\
         {\ifhhut@doctor \noindent\hhut@label@chairman%
-        \hhutunderline[54pt]{\hhut@value@chairman}
+        \hhutunderline[54pt]{\hhut@anonymous@mask{\hhut@value@chairman}}
         \hhut@label@reviewer%
         \hhut@reviewerfield{a}{\hhut@reviewercomma{b}}
         \hhut@reviewerfield{b}{\hhut@reviewercomma{c}}
@@ -664,7 +689,7 @@ numbersep=-1em
         \hhut@reviewerfield{f}{\hhut@reviewercomma{g}}
         \hhut@reviewerfield{g}{}
             \else \noindent\hhut@label@chairman%
-            \hhutunderline[54pt]{\hhut@value@chairman}
+            \hhutunderline[54pt]{\hhut@anonymous@mask{\hhut@value@chairman}}
             \hhut@label@reviewer%
             \hhut@reviewerfield{a}{\hhut@reviewercomma{b}}
             \hhut@reviewerfield{b}{\hhut@reviewercomma{c}}
@@ -686,7 +711,11 @@ numbersep=-1em
     \fi
 }
 \newcommand\makeverticaltitle{
-   \hhut@applyanonymous
+   \begingroup
+   \ifhhut@anonymous
+       \def\hhut@value@author{}%
+       \def\hhut@value@institute{}%
+   \fi
    \cleardoublepage
    \thispagestyle{empty}
    \pdfbookmark[0]{\hhut@label@spine}{spine}
@@ -707,10 +736,10 @@ numbersep=-1em
         \thispagestyle{empty}
         \cleardoublepage
     \fi
+    \endgroup
 }
 \newcommand\makeinfo%
 {
-    \hhut@applyanonymous
     \newpage
     \cleardoublepage
     \thispagestyle{empty}
@@ -733,13 +762,16 @@ numbersep=-1em
         }
         \hhut@cover@row{%
             \hhut@label@cover@author%
-            \hhut@cover@shortfield{\hhut@value@author}%
+            \hhut@cover@shortfield{%
+                \hhut@anonymous@mask{\hhut@value@author}}%
             \hspace{6pt}%
             \hhut@label@cover@studentnumber%
-            \hhut@cover@shortfield{\hhut@value@studentnumber}%
+            \hhut@cover@shortfield{%
+                \hhut@anonymous@mask{\hhut@value@studentnumber}}%
             \hspace{6pt}%
             \hhut@label@cover@institute%
-            \hhut@cover@shortfield{\hhut@value@institute}%
+            \hhut@cover@shortfield{%
+                \hhut@anonymous@mask{\hhut@value@institute}}%
         }
         \hhut@cover@row{%
             \hhut@cover@adaptivefield
@@ -794,25 +826,31 @@ numbersep=-1em
         \ifhhut@professionalmaster
             \hhut@cover@row{%
                 \hhut@label@cover@professional@tutora%
-                \hhut@cover@shortfield{\hhut@value@tutora}%
+                \hhut@cover@shortfield{%
+                    \hhut@anonymous@mask{\hhut@value@tutora}}%
                 \hspace{6pt}%
                 \hhut@label@cover@professional@tutorinstitute%
-                \hhut@cover@shortfield{\hhut@value@tutorainstitute}%
+                \hhut@cover@shortfield{%
+                    \hhut@anonymous@mask{\hhut@value@tutorainstitute}}%
             }
             \hhut@cover@row{%
                 \hhut@label@cover@professional@tutorb%
-                \hhut@cover@shortfield{\hhut@value@tutorb}%
+                \hhut@cover@shortfield{%
+                    \hhut@anonymous@mask{\hhut@value@tutorb}}%
                 \hspace{6pt}%
                 \hhut@label@cover@professional@tutorinstitute%
-                \hhut@cover@shortfield{\hhut@value@tutorbinstitute}%
+                \hhut@cover@shortfield{%
+                    \hhut@anonymous@mask{\hhut@value@tutorbinstitute}}%
             }
         \else
             \hhut@cover@row{%
                 \hhut@label@cover@tutor%
-                \hhut@cover@shortfield{\hhut@value@tutor}%
+                \hhut@cover@shortfield{%
+                    \hhut@anonymous@mask{\hhut@value@tutor}}%
                 \hspace{6pt}%
                 \hhut@label@cover@tutorinstitute%
-                \hhut@cover@shortfield{\hhut@value@tutorinstitute}%
+                \hhut@cover@shortfield{%
+                    \hhut@anonymous@mask{\hhut@value@tutorinstitute}}%
             }
         \fi
         \hhut@cover@row{%
@@ -835,38 +873,7 @@ numbersep=-1em
 \newcommand\englishdate[1]{\def\hhut@value@englishdate{#1}}
 \newcommand\enlocate[1]{\def\hhut@value@enlocate{#1}}
 \newcommand\englishdegree[1]{\def\hhut@value@englishdegree{#1}}
-\newcommand\hhut@anonymous@clear[1]{%
-    \expandafter\def\csname hhut@value@#1\endcsname{}}
-\newcommand\hhut@anonymous@clearreviewer[1]{%
-    \ifcsdef{hhut@value@reviewer#1}{%
-        \hhut@anonymous@clear{reviewer#1}}{}}
-\newcommand\hhut@applyanonymous{%
-    \ifhhut@anonymous
-        \hhut@anonymous@clear{author}
-        \hhut@anonymous@clear{englishauthor}
-        \hhut@anonymous@clear{englishdepartment}
-        \hhut@anonymous@clear{studentnumber}
-        \hhut@anonymous@clear{tutorinfoa}
-        \hhut@anonymous@clear{tutorinfob}
-        \hhut@anonymous@clear{tutorinfoaddress}
-        \hhut@anonymous@clear{tutor}
-        \hhut@anonymous@clear{tutorinstitute}
-        \hhut@anonymous@clear{tutora}
-        \hhut@anonymous@clear{tutorainstitute}
-        \hhut@anonymous@clear{tutorb}
-        \hhut@anonymous@clear{tutorbinstitute}
-        \hhut@anonymous@clear{entutor}
-        \hhut@anonymous@clear{chairman}
-        \hhut@anonymous@clearreviewer{a}
-        \hhut@anonymous@clearreviewer{b}
-        \hhut@anonymous@clearreviewer{c}
-        \hhut@anonymous@clearreviewer{d}
-        \hhut@anonymous@clearreviewer{e}
-        \hhut@anonymous@clearreviewer{f}
-        \hhut@anonymous@clearreviewer{g}
-    \fi}
 \newcommand\makeeninfo{%
-    \hhut@applyanonymous
     \cleardoublepage
     \thispagestyle{empty}
     \pdfbookmark[0]{\hhut@label@encover}{encover}
@@ -877,22 +884,15 @@ numbersep=-1em
         \vskip 60pt
         {\rmfamily\zihao{4}\hhut@label@enstatement}
         \vskip 60pt
-        \ifhhut@anonymous
-            {\rmfamily\zihao{4}\strut}\\
-            {\rmfamily\zihao{4}\strut}\\
-            {\rmfamily\zihao{4}\strut}
-        \else
-            {\normalfont\rmfamily\zihao{4}\hhut@label@enby}\\
-            {\rmfamily \zihao{4} \textbf{\hhut@value@englishauthor}}\\
-            {\rmfamily \zihao{4} \textbf{(\hhut@value@englishdepartment)}}
-        \fi
+        {\normalfont\rmfamily\zihao{4}\hhut@label@enby}\\
+        {\rmfamily \zihao{4} \textbf{%
+            \hhut@anonymous@mask{\hhut@value@englishauthor}}}\\
+        {\rmfamily \zihao{4} \textbf{(%
+            \ifhhut@anonymous College of XX%
+            \else\hhut@value@englishdepartment\fi)}}
         \vskip 60pt
-        \ifhhut@anonymous
-            {\rmfamily\zihao{4}\strut}
-        \else
-            {\normalfont\rmfamily\zihao{4}\hhut@label@entutor
-            \rmfamily \zihao{4} \hhut@value@entutor}
-        \fi
+        {\normalfont\rmfamily\zihao{4}\hhut@label@entutor
+        \rmfamily \zihao{4} \hhut@anonymous@mask{\hhut@value@entutor}}
         \vskip 60pt
         {\rmfamily \zihao{4} \hhut@value@enlocate}\\
         {\noindent \rmfamily \zihao{4} \hhut@value@englishdate}
