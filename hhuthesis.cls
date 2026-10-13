@@ -43,11 +43,13 @@
 \newif\ifhhut@professionalmaster\hhut@professionalmasterfalse
 \newif\ifhhut@nonfulltimemaster\hhut@nonfulltimemasterfalse
 \newif\ifhhut@doctor\hhut@doctorfalse
+\newif\ifhhut@binding\hhut@bindingfalse
 \DeclareOption{bachelor}{\hhut@bachelortrue}
 \DeclareOption{academicmaster}{\hhut@academicmastertrue}
 \DeclareOption{professionalmaster}{\hhut@professionalmastertrue}
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
+\DeclareOption{binding}{\hhut@bindingtrue}
 \ProcessOptions\relax
 \def\hhut@cleanopt#1=#2=#3\@nil{%
   \def\hhut@optname{#1}%
@@ -210,13 +212,16 @@ For the Degree of\\
     paper=a4paper,%
     top=2.5cm,%
     bottom=2.5cm,%
-    left=3.0cm,%
-    right=2.4cm,%
+    left=2.7cm,%
+    right=2.7cm,%
     marginparwidth=2.4cm,%
     marginparsep=0pt,%
     headheight=0.5cm,%
     footskip=0.7cm%
 ]{geometry}
+\ifhhut@binding
+  \geometry{left=3.0cm,right=2.4cm}
+\fi
 \RequirePackage{setspace}
 \RequirePackage{titletoc}
 \RequirePackage{graphicx}

@@ -276,6 +276,21 @@
 %   \documentclass[doctor]{hhuthesis}
 % \end{latex}
 %
+% \subsubsection{装订页边距}
+% \DescribeOption{binding}
+% 模板默认采用左右各2.7cm的对称页边距，适合电子版阅读。
+% 无值选项\option{binding}用于启用纸质打印装订页边距：奇数页左侧3.0cm、右侧2.4cm，
+% 在默认双面排版下，偶数页左右边距交换。
+% 两种配置的正文宽度相同；该选项仅调整左右页边距，不改变单双面排版、
+% 章节起始页、页眉页脚或其他设置。
+% \begin{latex}
+%   % 电子版阅读：左右各 2.7cm
+%   \documentclass[doctor]{hhuthesis}
+%   % 纸质打印装订：使用原有的装订页边距
+%   \documentclass[doctor,binding]{hhuthesis}
+% \end{latex}
+% 如需保留此前版本的装订页边距，应显式添加\option{binding}选项。
+%
 % \subsubsection{字体编码}
 % \DescribeOption{tonefont}
 % 字体编码模式，可选：\option{tonefont}。模板默认使用 TU 编码（通过 \pkg{fontspec} 加载系统字体），
@@ -977,18 +992,20 @@
 \ProcessKeyOptions[hhuthesis]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 %    \end{macrocode}
-% 定义论文学位类型以及打印方式
+% 定义论文学位类型以及装订页边距选项
 %    \begin{macrocode}
 \newif\ifhhut@bachelor\hhut@bachelorfalse
 \newif\ifhhut@academicmaster\hhut@academicmasterfalse
 \newif\ifhhut@professionalmaster\hhut@professionalmasterfalse
 \newif\ifhhut@nonfulltimemaster\hhut@nonfulltimemasterfalse
 \newif\ifhhut@doctor\hhut@doctorfalse
+\newif\ifhhut@binding\hhut@bindingfalse
 \DeclareOption{bachelor}{\hhut@bachelortrue}
 \DeclareOption{academicmaster}{\hhut@academicmastertrue}
 \DeclareOption{professionalmaster}{\hhut@professionalmastertrue}
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
+\DeclareOption{binding}{\hhut@bindingtrue}
 %    \end{macrocode}
 %
 % 处理选项：
@@ -1247,19 +1264,23 @@
 %    \end{macrocode}
 %
 % 使用\pkg{geometry} 宏包定义页面布局，定义段间距。页面大小为A4，上下边距为2.5cm，
-% 内侧边距为3.0cm，外侧边距为2.4cm，页眉为2.0cm，页脚为1.8cm。
+% 默认左右边距均为2.7cm；启用\option{binding}时，使用原有装订页边距。
+% 页眉为2.0cm，页脚为1.8cm。
 %    \begin{macrocode}
 \usepackage[%
     paper=a4paper,%
     top=2.5cm,%
     bottom=2.5cm,%
-    left=3.0cm,%
-    right=2.4cm,%
+    left=2.7cm,%
+    right=2.7cm,%
     marginparwidth=2.4cm,%
     marginparsep=0pt,%
     headheight=0.5cm,%
     footskip=0.7cm%
 ]{geometry} 
+\ifhhut@binding
+  \geometry{left=3.0cm,right=2.4cm}
+\fi
 %    \end{macrocode}
 %
 % 使用\pkg{setspace} 宏包控制行距。需在\pkg{hyperref} 宏包之前加载，避免脚注超链接失效。
