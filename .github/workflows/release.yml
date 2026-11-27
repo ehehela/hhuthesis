@@ -20,7 +20,7 @@ jobs:
           cp hhuthesis.dtx hhuthesis.ins hhuthesis.cls dtx-style.sty \
             hhuthesis-example.tex hhuname.pdf \
             hhuthesis.pdf hhuthesis-example.pdf \
-            README.md license.txt latexmkrc "$package_dir"/
+            README.md CHANGELOG.md license.txt latexmkrc "$package_dir"/
           cp -r chapters reference figures "$package_dir"/
           zip -r "${package_dir}.zip" "$package_dir"
       - name: Create GitHub Release
