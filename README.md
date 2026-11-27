@@ -12,7 +12,7 @@
 
 本仓库的主要修改针对博士研究生学位论文的排版格式，相关修改只在 `doctor` 场景下验证通过。
 
-当前版本为 `v3.4.0`，详细变更见 [CHANGELOG.md](CHANGELOG.md)。
+当前版本为 `v3.5.0`，详细变更见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 快速开始
 
