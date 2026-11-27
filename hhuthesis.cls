@@ -44,12 +44,14 @@
 \newif\ifhhut@nonfulltimemaster\hhut@nonfulltimemasterfalse
 \newif\ifhhut@doctor\hhut@doctorfalse
 \newif\ifhhut@binding\hhut@bindingfalse
+\newif\ifhhut@chapternumbering
 \DeclareOption{bachelor}{\hhut@bachelortrue}
 \DeclareOption{academicmaster}{\hhut@academicmastertrue}
 \DeclareOption{professionalmaster}{\hhut@professionalmastertrue}
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
 \DeclareOption{binding}{\hhut@bindingtrue}
+\DeclareOption{chapternumbering}{\hhut@chapternumberingtrue}
 \ProcessOptions\relax
 \def\hhut@cleanopt#1=#2=#3\@nil{%
   \def\hhut@optname{#1}%
@@ -416,14 +418,6 @@ labelsep = zhspace,
 aboveskip = {6bp},
 belowskip = {6bp},
 }
-\numberwithin{table}{section}
-\AtBeginDocument{%
-  \makeatletter
-  \@ifundefined{c@lstlisting}{}{%
-    \numberwithin{lstlisting}{section}%
-  }%
-  \makeatother
-}
 \captionsetup[figure]{
     labelfont = bf,
     textfont = bf,
@@ -434,17 +428,27 @@ belowskip = {6bp},
 }
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png,.jpeg,.bmp}
 \graphicspath{{figures/}}
-\numberwithin{equation}{section}
-\numberwithin{figure}{section}
-\renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
-\renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
-\renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
+\ifhhut@chapternumbering\else
+  \numberwithin{equation}{section}
+  \numberwithin{figure}{section}
+  \numberwithin{table}{section}
+  \renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
+  \renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
+  \renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
+  \AtBeginDocument{%
+    \@ifundefined{c@lstlisting}{}{%
+      \numberwithin{lstlisting}{section}%
+    }%
+  }
+\fi
 \apptocmd{\appendix}{%
   \renewcommand\thechapter{\Alph{chapter}}%
-  \renewcommand\theequation{\thechapter.\arabic{section}.\arabic{equation}}%
-  \renewcommand\thefigure{\thechapter.\arabic{section}.\arabic{figure}}%
-  \renewcommand\thetable{\thechapter.\arabic{section}.\arabic{table}}%
-  \renewcommand\thelstlisting{\thechapter.\arabic{section}.\arabic{lstlisting}}%
+  \ifhhut@chapternumbering\else
+    \renewcommand\theequation{\thechapter.\arabic{section}.\arabic{equation}}%
+    \renewcommand\thefigure{\thechapter.\arabic{section}.\arabic{figure}}%
+    \renewcommand\thetable{\thechapter.\arabic{section}.\arabic{table}}%
+    \renewcommand\thelstlisting{\thechapter.\arabic{section}.\arabic{lstlisting}}%
+  \fi
 }{}{}
 \def\hhut@getfileinfo#1 #2 #3\relax#4\relax{%
   \def\hhutfiledate{#1}%

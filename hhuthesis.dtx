@@ -291,6 +291,15 @@
 % \end{latex}
 % 如需保留此前版本的装订页边距，应显式添加\option{binding}选项。
 %
+% \subsubsection{公式、图、表和代码清单编号}
+% \DescribeOption{chapternumbering}
+% 公式、图、表和代码清单默认采用“章号.节号.序号”，每节从 1 开始编号。
+% 启用无值选项\option{chapternumbering}后，编号采用“章号.序号”，在同一章内跨节连续。
+% 附录用字母代替章号，例如启用该选项后，附录 A 的第一条公式编号为 A.1。
+% \begin{latex}
+%   \documentclass[doctor,chapternumbering]{hhuthesis}
+% \end{latex}
+%
 % \subsubsection{字体编码}
 % \DescribeOption{tonefont}
 % 字体编码模式，可选：\option{tonefont}。模板默认使用 TU 编码（通过 \pkg{fontspec} 加载系统字体），
@@ -993,7 +1002,7 @@
 \ProcessKeyOptions[hhuthesis]
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 %    \end{macrocode}
-% 定义论文学位类型以及装订页边距选项
+% 定义论文学位类型、装订页边距及编号选项。
 %    \begin{macrocode}
 \newif\ifhhut@bachelor\hhut@bachelorfalse
 \newif\ifhhut@academicmaster\hhut@academicmasterfalse
@@ -1001,12 +1010,14 @@
 \newif\ifhhut@nonfulltimemaster\hhut@nonfulltimemasterfalse
 \newif\ifhhut@doctor\hhut@doctorfalse
 \newif\ifhhut@binding\hhut@bindingfalse
+\newif\ifhhut@chapternumbering
 \DeclareOption{bachelor}{\hhut@bachelortrue}
 \DeclareOption{academicmaster}{\hhut@academicmastertrue}
 \DeclareOption{professionalmaster}{\hhut@professionalmastertrue}
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
 \DeclareOption{binding}{\hhut@bindingtrue}
+\DeclareOption{chapternumbering}{\hhut@chapternumberingtrue}
 %    \end{macrocode}
 %
 % 处理选项：
@@ -1713,7 +1724,7 @@
 \newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
 %    \end{macrocode}
 %
-% 设置图表标题选项，标题字体大小为5号字，表格序号与一级节序号关联。
+% 设置图表标题选项，标题字体大小为5号字。
 %    \begin{macrocode}
 \DeclareCaptionLabelSeparator{zhspace}{\hspace{1\ccwd}}
 \DeclareCaptionFont{fontsize}{\zihao{5}}
@@ -1732,18 +1743,6 @@
     justification = centering,
 	aboveskip = {6bp},
 	belowskip = {6bp},
-}
-\numberwithin{table}{section}
-% Ensure code listings follow section-based numbering too
-% Defer numbering adjustment until packages are loaded (listings defines the
-% `lstlisting` counter). This prevents "No counter 'lstlisting' defined" errors
-% when the command runs too early during class loading.
-\AtBeginDocument{%
-  \makeatletter
-  \@ifundefined{c@lstlisting}{}{%
-    \numberwithin{lstlisting}{section}%
-  }%
-  \makeatother
 }
 \captionsetup[figure]{
     labelfont = bf,
@@ -1765,20 +1764,31 @@
 \graphicspath{{figures/}}
 %    \end{macrocode}
 %
-% 公式和图的计数器也随一级节重置。公式、图、表的显示编号采用“C.S.N”。
-% 进入附录后，公式、图、表、代码编号的章号改用字母。
+% 默认将公式、图、表和代码清单设为按节编号。
+% \option{chapternumbering}沿用底层文类和\pkg{listings}的章内编号。
+% \pkg{listings}在文档开始时创建计数器，因此代码清单的设置也推迟到文档开始时执行。
 %    \begin{macrocode}
-\numberwithin{equation}{section}
-\numberwithin{figure}{section}
-\renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
-\renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
-\renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
+\ifhhut@chapternumbering\else
+  \numberwithin{equation}{section}
+  \numberwithin{figure}{section}
+  \numberwithin{table}{section}
+  \renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
+  \renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
+  \renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
+  \AtBeginDocument{%
+    \@ifundefined{c@lstlisting}{}{%
+      \numberwithin{lstlisting}{section}%
+    }%
+  }
+\fi
 \apptocmd{\appendix}{%
   \renewcommand\thechapter{\Alph{chapter}}%
-  \renewcommand\theequation{\thechapter.\arabic{section}.\arabic{equation}}%
-  \renewcommand\thefigure{\thechapter.\arabic{section}.\arabic{figure}}%
-  \renewcommand\thetable{\thechapter.\arabic{section}.\arabic{table}}%
-  \renewcommand\thelstlisting{\thechapter.\arabic{section}.\arabic{lstlisting}}%
+  \ifhhut@chapternumbering\else
+    \renewcommand\theequation{\thechapter.\arabic{section}.\arabic{equation}}%
+    \renewcommand\thefigure{\thechapter.\arabic{section}.\arabic{figure}}%
+    \renewcommand\thetable{\thechapter.\arabic{section}.\arabic{table}}%
+    \renewcommand\thelstlisting{\thechapter.\arabic{section}.\arabic{lstlisting}}%
+  \fi
 }{}{}
 %    \end{macrocode}
 %
