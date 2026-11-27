@@ -434,6 +434,8 @@ belowskip = {6bp},
 }
 \DeclareGraphicsExtensions{.pdf,.eps,.jpg,.png,.jpeg,.bmp}
 \graphicspath{{figures/}}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
 \renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
 \renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
 \renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}

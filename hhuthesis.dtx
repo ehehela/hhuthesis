@@ -1765,9 +1765,11 @@
 \graphicspath{{figures/}}
 %    \end{macrocode}
 %
-% 定义公式、图、表编号的形式“C.S.N”，进入附录后章号自动切换为字母前缀，
-% 公式、图、表、代码编号随之更新。
+% 公式和图的计数器也随一级节重置。公式、图、表的显示编号采用“C.S.N”。
+% 进入附录后，公式、图、表、代码编号的章号改用字母。
 %    \begin{macrocode}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
 \renewcommand\theequation{\arabic{chapter}.\arabic{section}.\arabic{equation}}
 \renewcommand\thefigure{\arabic{chapter}.\arabic{section}.\arabic{figure}}
 \renewcommand\thetable{\arabic{chapter}.\arabic{section}.\arabic{table}}
